@@ -26,7 +26,7 @@ app.get('/api/getusers', function(req, res){
             console.log("error: ", err);
                 }
         else{
-            return res.send({ error: false, data: results, message: 'users list.' });
+            return res.send({ error: false, data: res, message: 'users list.' });
         }
     })     
 })
