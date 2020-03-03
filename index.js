@@ -13,8 +13,24 @@ var con = mysql.createConnection({
     });
    
 app.get('/', function(req, res){
-    res.send("Hello World");
+    res.send("Please use the API endpoints, try api/getusers");
 })
+
+users = require ('./models/user');
+
+app.get('api/getusers', function(req, res){
+    
+    con.query("SELECT * FROM GEE_DB.Users", function (err, res) {
+            
+        if(err) {
+            console.log("error: ", err);
+                }
+        else{
+            return res.send({ error: false, data: results, message: 'users list.' });
+        }
+    })     
+})
+
 
 app.listen(3001);
 
