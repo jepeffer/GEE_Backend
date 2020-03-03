@@ -18,6 +18,14 @@ app.get('/', function(req, res){
 
 users = require ('./models/user');
 
+app.get('/users', function (req, res) {
+    con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: 'users list.' });
+    });
+});
+
+/*
 app.get('/api/getusers', function(req, res){
     
     con.query("SELECT * FROM GEE_DB.Users", function (err, res) {
@@ -30,7 +38,7 @@ app.get('/api/getusers', function(req, res){
         }
     })     
 })
-
+*/
 
 app.listen(3001);
 
