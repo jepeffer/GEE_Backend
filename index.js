@@ -16,9 +16,9 @@ app.get('/', function(req, res){
     res.send("Hello World");
 })
 
-app.listen(3000);
+app.listen(3001);
 
-console.log("Running on 3000");
+console.log("Running on 3001");
 
 con.connect(function(err) {
         if (err) throw err;
