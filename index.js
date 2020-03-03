@@ -15,5 +15,18 @@ var con = mysql.createConnection({
 con.connect(function(err) {
         if (err) throw err;
     });
+   
 
 module.exports = con;
+
+    sql.query("SELECT * FROM Users", newTask, function (err, res) {
+            
+            if(err) {
+                console.log("error: ", err);
+                result(err, null);
+            }
+            else{
+                console.log(res);
+                result(null, res);
+            }
+        })     
