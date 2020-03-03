@@ -8,8 +8,8 @@ console.log('todo list RESTful API server started on: ' + port);
 
 var con = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: ""
+    user: "foo",
+    password: "bar"
     });
    
 con.connect(function(err) {
