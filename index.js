@@ -18,7 +18,7 @@ app.get('/', function(req, res){
 
 users = require ('./models/user');
 
-app.get('api/getusers', function(req, res){
+app.get('/api/getusers', function(req, res){
     
     con.query("SELECT * FROM GEE_DB.Users", function (err, res) {
             
