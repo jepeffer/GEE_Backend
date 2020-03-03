@@ -19,7 +19,7 @@ con.connect(function(err) {
 
 module.exports = con;
 
-con.query("SELECT * FROM Users", function (err, res) {
+con.query("SELECT * FROM GEE_DB.Users", function (err, res) {
             
     if(err) {
         console.log("error: ", err);
