@@ -19,14 +19,14 @@ con.connect(function(err) {
 
 module.exports = con;
 
-    sql.query("SELECT * FROM Users", newTask, function (err, res) {
+mysql.query("SELECT * FROM Users", newTask, function (err, res) {
             
-            if(err) {
-                console.log("error: ", err);
+    if(err) {
+        console.log("error: ", err);
                 result(err, null);
             }
-            else{
-                console.log(res);
-                result(null, res);
-            }
+    else{
+        console.log(res);
+        result(null, res);
+    }
         })     
