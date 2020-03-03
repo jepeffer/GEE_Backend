@@ -12,6 +12,14 @@ var con = mysql.createConnection({
     password: "bar"
     });
    
+app.get('/', function(req, res){
+    res.send("Hello World");
+})
+
+app.listen(3000);
+
+console.log("Running on 3000");
+
 con.connect(function(err) {
         if (err) throw err;
     });
