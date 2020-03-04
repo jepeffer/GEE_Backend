@@ -5,7 +5,7 @@ var express = require('express'),
 app = express(),
 port = process.env.PORT || 3001;
 app.listen(port)
-console.log('todo list RESTful API server started on: ' + port);
+console.log('open on port: ' + port);
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -34,9 +34,6 @@ app.get('/users', cors(), (req, res, next) => {
 })
 
 
-app.listen(3001);
-
-console.log("Running on 3001");
 
 con.connect(function(err) {
         if (err) throw err;
