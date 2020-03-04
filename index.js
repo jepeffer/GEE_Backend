@@ -27,8 +27,6 @@ users = require ('./models/user');
 });
 */
 app.get('/users', cors(), (req, res, next) => {
-    
-        if (error) throw error;
         console.log("I AM HERE!!");
         for (const key in req.query) {
         console.log(key)
