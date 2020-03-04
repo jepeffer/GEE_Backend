@@ -48,7 +48,7 @@ function verifyUsers(username, pwd)
             flag = false;
             Object.keys(results).forEach(function(key) {
                 var row = results[key];
-                if (row.username == username && row.password == pwd)
+                if (row.username === username && row.password === pwd)
                 {
                     flag = true;
                 }
