@@ -27,7 +27,10 @@ users = require ('./models/user');
 });
 */
 app.get('/users', cors(), (req, res, next) => {
-    res.json({ msg: 'WHOAH with CORS it works! 🔝 🎉' })
+    con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: 'users list.' });
+    });
 })
 
 
