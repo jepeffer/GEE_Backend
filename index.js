@@ -3,7 +3,7 @@ var mysql = require('mysql');
 const cors = require('cors');
 var express = require('express'),
 app = express(),
-port = process.env.PORT || 3001;
+port = process.env.PORT || 3002;
 app.listen(port)
 console.log('open on port: ' + port);
 
