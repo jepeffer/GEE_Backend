@@ -1,8 +1,9 @@
 
 var mysql = require('mysql');
+var cors = require('cors');
 var express = require('express'),
 app = express(),
-port = process.env.PORT || 3000;
+port = process.env.PORT || 3001;
 app.listen(port)
 console.log('todo list RESTful API server started on: ' + port);
 
@@ -18,27 +19,17 @@ app.get('/', function(req, res){
 
 users = require ('./models/user');
 
-app.get('/users', function (req, res) {
+/*app.get('/users', function (req, res) {
     con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
         if (error) throw error;
         return res.send({ error: false, data: results, message: 'users list.' });
     });
 });
-
-/*
-app.get('/api/getusers', function(req, res){
-    
-    con.query("SELECT * FROM GEE_DB.Users", function (err, res) {
-            
-        if(err) {
-            console.log("error: ", err);
-                }
-        else{
-            return res.send({ error: false, data: res, message: 'users list.' });
-        }
-    })     
-})
 */
+app.get('/users', cors(), (req, res, next) => {
+    res.json({ msg: 'WHOAH with CORS it works! 🔝 🎉' })
+})
+
 
 app.listen(3001);
 
