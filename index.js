@@ -48,10 +48,6 @@ app.get('/users', cors(), (req, res, next) => {
 })
 
 
-verifyUser(username, password)
-{
-
-}
 
 
 con.connect(function(err) {
