@@ -29,15 +29,29 @@ users = require ('./models/user');
 app.get('/users', cors(), (req, res, next) => {
     con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
         if (error) throw error;
-            pwd = req.query.password;
-            username = req.query.username;
-            console.log("This is pwd:"  + pwd + " " + username);
-          
+        console.log("This is req: " + req.query);
+        pwd;
+        username;
+        for (const key in req.query) {
+            console.log(key, req.query[key])
+             if (key == 2)
+             {
+                 pwd = req.query[key];
+             }   
+             else{
+                    username = req.query[key];
+             }
+          }
+          console.log("This is parameters: " + pwd + " " + username);
         return res.send({ error: false, data: results, message: 'users list.' });
     });
 })
 
 
+verifyUser(username, password)
+{
+
+}
 
 
 con.connect(function(err) {
