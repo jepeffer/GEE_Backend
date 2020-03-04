@@ -35,6 +35,7 @@ app.get('/users', cors(), (req, res, next) => {
         pwd = req.query.password;
         username = req.query.username;
         results = verifyUsers(username, pwd);
+        console.log("THIS IS RESULTS: " + results);
         if (results === true)
         {
             results = 1;
