@@ -34,6 +34,9 @@ app.get('/users', cors(), (req, res, next) => {
         console.log(key)
         console.log(req.query[key]);
         }
+        pwd = req.query.password;
+        username = req.query.username;
+        console.log ("here is password: " + pwd);
         return res.send({ error: false, data: results, message: 'users list.' });
     });
 })
