@@ -29,6 +29,7 @@ users = require ('./models/user');
 app.get('/users', cors(), (req, res, next) => {
     con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
         if (error) throw error;
+        console.log("I AM HERE!!");
         for (const key in req.query) {
         console.log(key)
         console.log(req.query[key]);
@@ -47,13 +48,3 @@ con.connect(function(err) {
    
 
 module.exports = con;
-
-con.query("SELECT * FROM GEE_DB.Users", function (err, res) {
-            
-    if(err) {
-        console.log("error: ", err);
-            }
-    else{
-        console.log(res);
-    }
-        })     
