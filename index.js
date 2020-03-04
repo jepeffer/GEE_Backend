@@ -30,22 +30,13 @@ app.get('/users', cors(), (req, res, next) => {
     con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
         if (error) throw error;
         console.log("This is req: " + req.query);
-        pwd;
-        username;
         for (const key in req.query) {
-            console.log(key, req.query[key])
-             if (key == 2)
-             {
-                 pwd = req.query[key];
-             }   
-             else{
-                    username = req.query[key];
-             }
-          }
-          console.log("This is parameters: " + pwd + " " + username);
+        console.log(key, req.query[key])
+}
         return res.send({ error: false, data: results, message: 'users list.' });
     });
 })
+
 
 
 
