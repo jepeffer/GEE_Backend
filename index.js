@@ -1,6 +1,6 @@
 
 var mysql = require('mysql');
-var cors = require('cors');
+const cors = require('cors');
 var express = require('express'),
 app = express(),
 port = process.env.PORT || 3001;
