@@ -44,10 +44,9 @@ function verifyUsers(username, pwd)
     con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
         if (results)
         {
-            Object.keys(results.rows[index]).forEach(function(key) {
-                var val = results.rows[index][key];
-                console.log('key is: ' + key);
-                console.log('val is: ' + val);
+            Object.keys(result).forEach(function(key) {
+                var row = result[key];
+                console.log(row.name)
               });
             console.log(results.user);
         }
