@@ -48,7 +48,7 @@ app.get('/users', cors(), (req, res, next) => {
 })
 
 
-function verifyUsers(username, pwd)
+async function verifyUsers(username, pwd)
 {
     flag = false;
     con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
