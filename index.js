@@ -34,7 +34,7 @@ app.get('/users', cors(), (req, res, next) => {
         }
         pwd = req.query.password;
         username = req.query.username;
-        verifyUsers(username, pwd);
+        results = verifyUsers(username, pwd);
         return res.send({ error: false, data: results, message: 'users list.' });
 })
 
@@ -44,7 +44,12 @@ function verifyUsers(username, pwd)
     con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
         if (results)
         {
-            console.log(results);
+            Object.keys(results.rows[index]).forEach(function(key) {
+                var val = results.rows[index][key];
+                console.log('key is: ' + key);
+                console.log('val is: ' + val);
+              });
+            console.log(results.user);
         }
     });
 }
