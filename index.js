@@ -46,7 +46,7 @@ function verifyUsers(username, pwd)
         {
             Object.keys(results).forEach(function(key) {
                 var row = results[key];
-                console.log(row.name)
+                console.log(row.username)
               });
             console.log(results.user);
         }
