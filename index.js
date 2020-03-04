@@ -51,7 +51,7 @@ app.get('/users', cors(), (req, res, next) => {
                 //console.log(results.user);
             }
             console.log("This is flag:" + flag);
-            final_results;
+            var final_results;
             if (flag === true)
             {
                 final_results = 1;
