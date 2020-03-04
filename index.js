@@ -57,10 +57,9 @@ function verifyUsers(username, pwd)
               });
             //console.log(results.user);
         }
-        
+        console.log("This is flag:" + flag);
+        return flag;
     });
-    console.log("This is flag:" + flag);
-    return flag;
 }
 
 
