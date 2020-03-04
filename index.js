@@ -35,6 +35,14 @@ app.get('/users', cors(), (req, res, next) => {
         pwd = req.query.password;
         username = req.query.username;
         results = verifyUsers(username, pwd);
+        if (results === true)
+        {
+            results = 1;
+        }
+        else
+        {
+            results = 0;
+        }
         return res.send({ error: false, data: results, message: 'users list.' });
 })
 
@@ -52,8 +60,8 @@ function verifyUsers(username, pwd)
                 {
                     flag = true;
                 }
-                console.log(row.username)
-                console.log(row.password)
+                //console.log(row.username)
+                //console.log(row.password)
               });
             //console.log(results.user);
         }
