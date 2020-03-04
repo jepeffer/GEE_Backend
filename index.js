@@ -41,17 +41,26 @@ app.get('/users', cors(), (req, res, next) => {
 
 function verifyUsers(username, pwd)
 {
+    flag = false;
     con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
         if (results)
         {
+            flag = false;
             Object.keys(results).forEach(function(key) {
                 var row = results[key];
+                if (row.username == username && row.password == pwd)
+                {
+                    flag = true;
+                }
                 console.log(row.username)
                 console.log(row.password)
               });
             //console.log(results.user);
         }
+        
     });
+    console.log("This is flag:" + flag);
+    return flag;
 }
 
 
