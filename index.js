@@ -29,8 +29,8 @@ users = require ('./models/user');
 app.get('/users', cors(), (req, res, next) => {
         console.log("I AM HERE!!");
         for (const key in req.query) {
-        console.log(key)
-        console.log(req.query[key]);
+        //console.log(key)
+       // console.log(req.query[key]);
         }
         pwd = req.query.password;
         username = req.query.username;
@@ -47,8 +47,9 @@ function verifyUsers(username, pwd)
             Object.keys(results).forEach(function(key) {
                 var row = results[key];
                 console.log(row.username)
+                console.log(row.password)
               });
-            console.log(results.user);
+            //console.log(results.user);
         }
     });
 }
