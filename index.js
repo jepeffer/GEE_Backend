@@ -34,41 +34,45 @@ app.get('/users', cors(), (req, res, next) => {
         }
         pwd = req.query.password;
         username = req.query.username;
-        results = await verifyUsers(username, pwd);
-        console.log("THIS IS RESULTS: " + results);
-        if (results === true)
-        {
-            results = 1;
-        }
-        else
-        {
-            results = 0;
-        }
-        return res.send({ error: false, data: results, message: 'users list.' });
+        flag = false;
+        con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
+            if (results)
+            {
+                flag = false;
+                Object.keys(results).forEach(function(key) {
+                    var row = results[key];
+                    if (row.username === username && row.password === pwd)
+                    {
+                        flag = true;
+                    }
+                    //console.log(row.username)
+                    //console.log(row.password)
+                  });
+                //console.log(results.user);
+            }
+            console.log("This is flag:" + flag);
+            final_results;
+            if (flag === true)
+            {
+                final_results = 1;
+            }
+            else
+            {
+                final_results = 0;
+            }
+            console.log("THIS IS RESULTS: " + results);
+            return res.send({ error: false, data: final_results, message: 'users list.' });
+            
+        });
+
+        
+       
 })
 
 
-async function verifyUsers(username, pwd)
+function verifyUsers(username, pwd)
 {
-    flag = false;
-    con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
-        if (results)
-        {
-            flag = false;
-            Object.keys(results).forEach(function(key) {
-                var row = results[key];
-                if (row.username === username && row.password === pwd)
-                {
-                    flag = true;
-                }
-                //console.log(row.username)
-                //console.log(row.password)
-              });
-            //console.log(results.user);
-        }
-        console.log("This is flag:" + flag);
-        return flag;
-    });
+  
 }
 
 
