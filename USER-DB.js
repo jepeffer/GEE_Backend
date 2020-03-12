@@ -3,11 +3,11 @@ var pool = require("./pool")
 module.exports.getUsers = async (req) => {
     if (req.query.username && req.query.password) {
       let values = [req.query.username, req.query.password];
-      let query = "SELECT * FROM GEE.DB.Users";
+      let query = "SELECT * FROM Users";
   
       // If set then limit to only a ticket linked to locations the user has access to
       if (req.username) {
-        query = "SELECT * FROM GEE.DB.Users";
+        query = "SELECT * FROM Users";
         values.push(1);
       }
   
