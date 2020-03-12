@@ -1,10 +1,18 @@
 
 var mysql = require('mysql');
 const cors = require('cors');
+const db = require('./USER-DB');
+var bodyParser = require('body-parser');
 var express = require('express'),
 app = express(),
 port = process.env.PORT || 3002;
-app.listen(port)
+app.listen(port);
+
+// No file bombs here
+app.use(bodyParser.json({
+    limit: '20mb'
+    }));
+
 console.log('open on port: ' + port);
 
 var con = mysql.createConnection({
@@ -26,6 +34,17 @@ users = require ('./models/user');
     });
 });
 */
+
+app.get('/userstest', cors(), (req, res, next)=> {
+    db.getTicket(req, res).then(result => {
+  res.send(result);
+}, reject => {
+  console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+  res.status(500).send("oops");
+});
+});
+
+
 app.get('/users', cors(), (req, res, next) => {
         console.log("I AM HERE!!");
         for (const key in req.query) {
