@@ -36,14 +36,13 @@ users = require ('./models/user');
 */
 
 app.get('/userstest', cors(), (req, res, next)=> {
-    db.getTicket(req, res).then(result => {
+    db.getUsers(req, res).then(result => {
   res.send(result);
 }, reject => {
   console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
   res.status(500).send("oops");
 });
 });
-
 
 app.get('/users', cors(), (req, res, next) => {
         console.log("I AM HERE!!");
@@ -82,22 +81,11 @@ app.get('/users', cors(), (req, res, next) => {
             console.log("THIS IS RESULTS: " + results);
             return res.send({ error: false, data: final_results, message: 'users list.' });
             
-        });
-
-        
-       
+        }); 
 })
-
-
-function verifyUsers(username, pwd)
-{
-  
-}
-
 
 con.connect(function(err) {
         if (err) throw err;
     });
    
-
 module.exports = con;

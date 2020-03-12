@@ -1,4 +1,6 @@
-module.exports.getTicket = async (req) => {
+var pool = require("./pool")
+
+module.exports.getUsers = async (req) => {
     if (req.query.username && req.query.password) {
       let values = [req.query.username, req.query.password];
       let query = "SELECT * FROM GEE.DB.Users";
