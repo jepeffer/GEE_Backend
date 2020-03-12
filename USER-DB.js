@@ -4,9 +4,9 @@ module.exports.getTicket = async (req) => {
       let query = "SELECT * FROM GEE.DB.Users";
   
       // If set then limit to only a ticket linked to locations the user has access to
-      if (req.user.location_access.length) {
+      if (req.username) {
         query = "SELECT * FROM GEE.DB.Users";
-        values.push(req.user.location_access);
+        values.push(1);
       }
   
       let result = await pool.query(query, values);
