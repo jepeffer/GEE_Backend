@@ -37,7 +37,7 @@ users = require ('./models/user');
 
 app.get('/userstest', cors(), (req, res, next)=> {
     db.getUsers(req, res).then(result => {
-  res.send(result);
+    res.send(result);
 }, reject => {
   console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
   res.status(500).send("oops");
@@ -83,6 +83,18 @@ app.get('/users', cors(), (req, res, next) => {
             
         }); 
 })
+
+/*app.get('/users', cors(), (req, res, next) => {
+    console.log("I AM HERE!!");
+    for (const key in req.query) {
+    //console.log(key)
+   // console.log(req.query[key]);
+    }
+
+    con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
+      
+    }); 
+})*/
 
 con.connect(function(err) {
         if (err) throw err;
