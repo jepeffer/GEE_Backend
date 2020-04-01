@@ -26,7 +26,7 @@ module.exports.getUsers = async (req) => {
       let values = [req.query.username, req.query.password];
       console.log("Registering user:" + req.query.username);
       // If set then limit to only a ticket linked to locations the user has access to
-       let query = "INSERT INTO Users (username, password) VALUES (" + req.query.username + "," + req.query.password + ")";
+       let query = "INSERT INTO Users (username, password) VALUES ('" + req.query.username + "', '" + req.query.password + "')";
       
   
       let result = await pool.query(query);
