@@ -3,12 +3,11 @@ var pool = require("./pool")
 module.exports.getUsers = async (req) => {
     if (req.query.username && req.query.password) {
       let values = [req.query.username, req.query.password];
-      let query = "";
       // If set then limit to only a ticket linked to locations the user has access to
-      if (req.username) {
-        query = "SELECT * FROM Users";
-        values.push(1);
-      }
+
+      let query = "SELECT * FROM Users";
+      values.push(1);
+      
   
       let result = await pool.query(query, values);
       if (result.length) {
@@ -25,12 +24,10 @@ module.exports.getUsers = async (req) => {
   module.exports.registerUser = async (req) => {
     if (req.query.username && req.query.password) {
       let values = [req.query.username, req.query.password];
-      let query = "";
       console.log("Registering user:" + req.query.username);
       // If set then limit to only a ticket linked to locations the user has access to
-      if (req.username) {
-        query = "INSERT INTO Users (username, password) VALUES (" + req.username + "," + req.password + ")";
-      }
+       let query = "INSERT INTO Users (username, password) VALUES (" + req.username + "," + req.password + ")";
+      
   
       let result = await pool.query(query);
       if (result.length) {
