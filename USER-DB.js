@@ -30,9 +30,7 @@ module.exports.getUsers = async (req) => {
       
   values.push(1)
       let result = await pool.query(query, values);
-      if (result.length) {
-        return (result[0]);
-      }
+      console.log(result);
   
       return null;
     } else {
