@@ -3,8 +3,7 @@ var pool = require("./pool")
 module.exports.getUsers = async (req) => {
     if (req.query.username && req.query.password) {
       let values = [req.query.username, req.query.password];
-      let query = "SELECT * FROM Users";
-  
+      let query = "";
       // If set then limit to only a ticket linked to locations the user has access to
       if (req.username) {
         query = "SELECT * FROM Users";
@@ -26,7 +25,7 @@ module.exports.getUsers = async (req) => {
   module.exports.registerUser = async (req) => {
     if (req.query.username && req.query.password) {
       let values = [req.query.username, req.query.password];
-      let query = "SELECT * FROM Users";
+      let query = "";
       console.log("Registering user:" + req.query.username);
       // If set then limit to only a ticket linked to locations the user has access to
       if (req.username) {
