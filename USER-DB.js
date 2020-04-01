@@ -27,12 +27,10 @@ module.exports.getUsers = async (req) => {
     if (req.query.username && req.query.password) {
       let values = [req.query.username, req.query.password];
       let query = "SELECT * FROM Users";
-  
+      console.log("Registering user:" + req.query.username);
       // If set then limit to only a ticket linked to locations the user has access to
       if (req.username) {
         query = "INSERT INTO Users (username, password) VALUES (" + req.username + "," + req.password + ")";
-        query = "SELECT * FROM Users";
-        values.push(1);
       }
   
       let result = await pool.query(query);
