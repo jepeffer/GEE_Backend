@@ -27,16 +27,17 @@ app.get('/', function(req, res){
 
 users = require ('./models/user');
 
-/*app.get('/users', function (req, res) {
-    con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
-        if (error) throw error;
-        return res.send({ error: false, data: results, message: 'users list.' });
-    });
-});
-*/
-
 app.get('/userstest', cors(), (req, res, next)=> {
     db.getUsers(req, res).then(result => {
+    res.send(result);
+}, reject => {
+  console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+  res.status(500).send("oops");
+});
+});
+
+app.get('/registerUser', cors(), (req, res, next)=> {
+    db.registerUser(req, res).then(result => {
     res.send(result);
 }, reject => {
   console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
