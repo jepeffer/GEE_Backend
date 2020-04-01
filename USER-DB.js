@@ -22,16 +22,16 @@ module.exports.getUsers = async (req) => {
   };
 
   module.exports.registerUser = async (req) => {
-    if (req.query.username && req.query.password) {
-      let values = [req.query.username, req.query.password];
+    if (req.query.username && req.query.password && req.query.email) {
       console.log("Registering user:" + req.query.username);
       // If set then limit to only a ticket linked to locations the user has access to
-       let query = "INSERT INTO Users (username, password) VALUES ('" + req.query.username + "', '" + req.query.password + "')";
-      
-  values.push(1)
-      let result = await pool.query(query, values);
+      let query = "INSERT INTO Users (username, password, email) VALUES ('" + req.query.username + "', '" + req.query.password + "','" + req.query.email + "')";
+      let result = await pool.query(query);
       console.log(result);
-  
+      if (result.insertId > 0)
+      {
+        return 1;
+      }
       return null;
     } else {
       console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
