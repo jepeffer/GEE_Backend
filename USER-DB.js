@@ -28,8 +28,8 @@ module.exports.getUsers = async (req) => {
       // If set then limit to only a ticket linked to locations the user has access to
        let query = "INSERT INTO Users (username, password) VALUES ('" + req.query.username + "', '" + req.query.password + "')";
       
-  
-      let result = await pool.query(query);
+  values.push(1)
+      let result = await pool.query(query, values);
       if (result.length) {
         return (result[0]);
       }
