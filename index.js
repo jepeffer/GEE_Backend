@@ -32,7 +32,7 @@ app.get('/userstest', cors(), (req, res, next)=> {
     res.send(result);
 }, reject => {
   console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
-  res.send("oops");
+  res.sendStatus("oops");
 });
 });
 
