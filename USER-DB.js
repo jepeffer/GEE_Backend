@@ -6,7 +6,6 @@ module.exports.getUsers = async (req) => {
       // If set then limit to only a ticket linked to locations the user has access to
 
       let query = "SELECT * FROM Users";
-      values.push(1);
       
   
       let result = await pool.query(query, values);
