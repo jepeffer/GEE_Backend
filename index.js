@@ -22,14 +22,14 @@ var con = mysql.createConnection({
     });
    
 app.get('/', function(req, res){
-    res.send("Please use the API endpoints, try api/getusers");
+    res.sendStatus("Please use the API endpoints, try api/getusers");
 })
 
 users = require ('./models/user');
 
 app.get('/userstest', cors(), (req, res, next)=> {
     db.getUsers(req, res).then(result => {
-    res.send(result);
+    res.sendStatus(result);
 }, reject => {
   console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
   res.status(500).send("oops");
@@ -38,7 +38,7 @@ app.get('/userstest', cors(), (req, res, next)=> {
 
 app.get('/registerUser', cors(), (req, res, next)=> {
     db.registerUser(req, res).then(result => {
-    res.send(result);
+    res.sendStatus(result);
 }, reject => {
   console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
   res.status(500).send("oops");

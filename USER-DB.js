@@ -31,6 +31,6 @@ module.exports.getUsers = async (req) => {
       return 1;
     } else {
       console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
-      return Promise.reject("Bad");
+      return Promise.reject();
     }
   };
