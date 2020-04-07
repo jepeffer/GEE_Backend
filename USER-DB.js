@@ -24,7 +24,7 @@ module.exports.getUsers = async (req) => {
     if (req.query.username && req.query.password && req.query.email) {
       console.log("Registering user:" + req.query.username);
 
-      let query = "SELECT * FROM Users";
+      let query = "SELECT * FROM Users WHERE username = '" + req.query.username +"'";
       let result = await pool.query(query, values);
       if (result.length) // User is already taken!
       {
