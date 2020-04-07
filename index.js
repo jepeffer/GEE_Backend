@@ -38,7 +38,7 @@ app.get('/userstest', cors(), (req, res, next)=> {
 
 app.get('/registerUser', cors(), (req, res, next)=> {
     db.registerUser(req, res).then(result => {
-    res.sendStatus(result);
+    res.send(result);
 }, reject => {
   console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
   res.status(500).send("oops");
