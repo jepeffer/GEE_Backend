@@ -24,13 +24,16 @@ module.exports.getUsers = async (req) => {
     if (req.query.username && req.query.password && req.query.email) {
       console.log("Registering user:" + req.query.username);
 
+      let query = "SELECT * FROM Users";
+      let result = await pool.query(query, values);
+      if (result.length) // User is already taken!
+      {
+        print("This is result in registerUser: " + result[0]);
+        return "2";
+      }
       let query = "INSERT INTO Users (username, password, email) VALUES ('" + req.query.username + "', '" + req.query.password + "','" + req.query.email + "')";
       let result = await pool.query(query);
-      console.log("This is result: " + result[0]);
-      if (result.length) {
-        return (result[0]);
-      }
-      return null;
+      return "1"; // All was added correctly.
     } else {
       console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
       return Promise.reject();
