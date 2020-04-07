@@ -28,7 +28,7 @@ module.exports.getUsers = async (req) => {
       let result = await pool.query(query);
       if (result.length) // User is already taken!
       {
-        print("This is result in registerUser: " + result[0]);
+        console.log("This is result in registerUser: " + result[0]);
         return "2";
       }
       else{
