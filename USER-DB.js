@@ -55,11 +55,18 @@ module.exports.getUsers = async (req) => {
   };
 
   module.exports.search = async (req) => {
+    if (req.query.subject)
+    {
+      console.log("Subject found!")
+    }
     if (req.query.keywords) {
+      console.log("Keyword found!")
       return "1"; // All was added correctly.
       
-    } else {
-      console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
+    } 
+    
+    else {
+      console.error(new Date().toISOString(), req.path, `Search result was incomplete ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
       return Promise.reject();
     }
   };
