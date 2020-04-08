@@ -46,7 +46,7 @@ app.get('/registerUser', cors(), (req, res, next)=> {
 });
 
 app.get('/users', cors(), (req, res, next) => {
-        console.log("I AM HERE!!");
+        console.log("Users endpoint called");
         for (const key in req.query) {
         //console.log(key)
        // console.log(req.query[key]);
@@ -83,6 +83,16 @@ app.get('/users', cors(), (req, res, next) => {
             return res.send({ error: false, data: final_results, message: 'users list.' });
             
         }); 
+})
+
+app.get('/search', cors(), (req, res, next) => {
+    db.search(req, res).then(result => {
+        res.send(result);
+    }, reject => {
+      console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+      res.send("oops");
+    });
+    
 })
 
 /*app.get('/users', cors(), (req, res, next) => {
