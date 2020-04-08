@@ -59,6 +59,14 @@ module.exports.getUsers = async (req) => {
     {
       console.log("Subject found!")
     }
+    if (req.query.gradeLevel)
+    {
+      console.log("Grade Level found!")
+    }
+    if (req.query.contentType)
+    {
+      console.log("ContentType found!")
+    }
     if (req.query.keywords) {
       console.log("Keyword found!")
       return "1"; // All was added correctly.
