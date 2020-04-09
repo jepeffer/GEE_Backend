@@ -71,12 +71,16 @@ module.exports.getUsers = async (req) => {
       r = r + "Content Type Found,";
       console.log("ContentType found!")
     }
+    if (req.query.includes)
+    {
+      r = r + "Includes Found,";
+      console.log("ContentType found!")
+    }
     if (req.query.keywords) {
-      r = r + "Keyword found Found,";
+      r = r + "Keyword found Found";
       console.log("Keyword found!")
       return r; // All was added correctly.
     } 
-    
     else {
       console.error(new Date().toISOString(), req.path, `Search result was incomplete ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
       return Promise.reject();
@@ -87,19 +91,23 @@ module.exports.getUsers = async (req) => {
     var r  = ""
     if (req.query.fileTitle)
     {
+      r = r + "File Title Found,";
       console.log("fileTitle found!")
     }
     if (req.query.tags)
     {
+      r = r + "Tags Found,";
       console.log("Tags found!")
     }
     if (req.query.includes)
     {
+      r = r + "Includes found";
       console.log("Includes found!")
     }
     if (req.query.contentDescription) {
+      r = r + "Content Description";
       console.log("contentDescription found!")
-      return "1"; // All was added correctly.
+      return r; // All was added correctly.
     } 
     
     else {

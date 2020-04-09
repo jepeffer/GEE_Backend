@@ -95,6 +95,16 @@ app.get('/search', cors(), (req, res, next) => {
     
 })
 
+app.get('/upload', cors(), (req, res, next) => {
+    db.upload(req, res).then(result => {
+        res.send(result);
+    }, reject => {
+      console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+      res.send("oops");
+    });
+    
+})
+
 /*app.get('/users', cors(), (req, res, next) => {
     console.log("I AM HERE!!");
     for (const key in req.query) {
