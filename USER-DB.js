@@ -55,22 +55,51 @@ module.exports.getUsers = async (req) => {
   };
 
   module.exports.search = async (req) => {
+    var r  = ""
     if (req.query.subject)
     {
+      r = r + "Subject Found,";
       console.log("Subject found!")
     }
     if (req.query.gradeLevel)
     {
+      r = r + "Grade Level Found,";
       console.log("Grade Level found!")
     }
     if (req.query.contentType)
     {
+      r = r + "Content Type Found,";
       console.log("ContentType found!")
     }
     if (req.query.keywords) {
+      r = r + "Keyword found Found,";
       console.log("Keyword found!")
+      return r; // All was added correctly.
+    } 
+    
+    else {
+      console.error(new Date().toISOString(), req.path, `Search result was incomplete ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
+      return Promise.reject();
+    }
+  };
+
+  module.exports.upload = async (req) => {
+    var r  = ""
+    if (req.query.fileTitle)
+    {
+      console.log("fileTitle found!")
+    }
+    if (req.query.tags)
+    {
+      console.log("Tags found!")
+    }
+    if (req.query.includes)
+    {
+      console.log("Includes found!")
+    }
+    if (req.query.contentDescription) {
+      console.log("contentDescription found!")
       return "1"; // All was added correctly.
-      
     } 
     
     else {
