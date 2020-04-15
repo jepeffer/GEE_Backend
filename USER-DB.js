@@ -69,7 +69,7 @@ module.exports.getUsers = async (req) => {
     if (req.query.contentType)
     {
       r = r + "Content Type Found,";
-      console.log("ContentType foud!")
+      console.log("ContentType found!")
     }
     if (req.query.includes)
     {
