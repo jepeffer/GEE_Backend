@@ -105,7 +105,7 @@ app.get('/upload', cors(), (req, res, next) => {
     
 })
 
-app.get('/download', function(req, res){
+app.get('/download',cors(), function(req, res){
     const file = `/root/Resources/test.txt`;
     res.download(file); // Set disposition and send it.
   });
