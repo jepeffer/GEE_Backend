@@ -57,7 +57,7 @@ module.exports.getUsers = async (req) => {
   
 
   module.exports.search = async (req) => {
-    let query = "SELECT * FROM OER WHERE keyword LIKE %" + req.query.keywords + "%";
+    let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%'";
     let results = await pool.query(query);
     console.log("The results are " + results);
     return results;
