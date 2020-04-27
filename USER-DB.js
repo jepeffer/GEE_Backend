@@ -59,6 +59,7 @@ module.exports.getUsers = async (req) => {
   module.exports.search = async (req) => {
     let query = "SELECT * FROM OER WHERE keyword LIKE %" + req + "%";
     let results = await pool.query(query);
+    console.log("The results are " + results);
     return results;
     var file = `/root/Resources/test.txt`;
     var r  = "";
