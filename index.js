@@ -27,7 +27,7 @@ app.get('/', function(req, res){
 
 users = require ('./models/user');
 
-app.get('/userstest', cors(), (req, res, next)=> {
+app.get('/users', cors(), (req, res, next)=> {
     db.getUsers(req, res).then(result => {
     res.send(result);
 }, reject => {
@@ -45,7 +45,7 @@ app.get('/registerUser', cors(), (req, res, next)=> {
 });
 });
 
-app.get('/users', cors(), (req, res, next) => {
+/*app.get('/users', cors(), (req, res, next) => {
         console.log("Users endpoint called");
         for (const key in req.query) {
         //console.log(key)
@@ -84,7 +84,7 @@ app.get('/users', cors(), (req, res, next) => {
             
         }); 
 })
-
+*/
 app.get('/search', cors(), (req, res, next) => {
     db.search(req, res).then(result => {
         res.send(result);
