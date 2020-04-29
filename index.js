@@ -3,16 +3,15 @@ var mysql = require('mysql');
 const cors = require('cors');
 const db = require('./USER-DB');
 var bodyParser = require('body-parser');
-
+var express = require('express');
 var fs = require('fs');
 var multer = require('multer');
 var upload = multer({dest: DIR});
-
-var express = require('express'),
-
-app = express(),
-
 var DIR = './Resources';
+var port = 3002;
+
+app = express();
+
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://valor-software.github.io');
@@ -22,26 +21,32 @@ app.use(function (req, res, next) {
     next();
   });
 
-  use(multer({
-    dest: DIR,
-    upload: function (fieldname, filename) {
-      return filename + Date.now();
-    },
-    onFileUploadStart: function (file) {
-      console.log(file.originalname + ' is starting ...');
-    },
-    onFileUploadComplete: function (file) {
-      console.log(file.fieldname + ' uploaded to  ' + file.path);
-    }
-  }));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({extended: true}));
 
 // No file bombs here
 app.use(bodyParser.json({
     limit: '20mb'
     }));
 
+app.get('/api', function (req, res) {
+        res.end('file catcher example');
+      });
+       
+app.post('/api/upload',upload.single('photo'), function (req, res) {
+if (!req.file) {
+    console.log("No file received");
+    return res.send({
+        success: false
+    });
 
-
+    } else {
+    console.log('file received successfully');
+    return res.send({
+        success: true
+    })
+    }
+});
 console.log('open on port: ' + port);
 
 var con = mysql.createConnection({
