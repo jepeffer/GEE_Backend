@@ -7,7 +7,7 @@ var express = require('express');
 var fs = require('fs');
 var multer = require('multer');
 var upload = multer({dest: DIR});
-var DIR = './Resources';
+var DIR = '/root/Resources';
 var port = 3002;
 
 app = express();
