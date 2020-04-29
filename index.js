@@ -3,15 +3,44 @@ var mysql = require('mysql');
 const cors = require('cors');
 const db = require('./USER-DB');
 var bodyParser = require('body-parser');
+
+var fs = require('fs');
+var multer = require('multer');
+var upload = multer({dest: DIR});
+
 var express = require('express'),
+
 app = express(),
-port = process.env.PORT || 3002;
-app.listen(port);
+
+var DIR = './Resources';
+
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://valor-software.github.io');
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+  });
+
+  use(multer({
+    dest: DIR,
+    upload: function (fieldname, filename) {
+      return filename + Date.now();
+    },
+    onFileUploadStart: function (file) {
+      console.log(file.originalname + ' is starting ...');
+    },
+    onFileUploadComplete: function (file) {
+      console.log(file.fieldname + ' uploaded to  ' + file.path);
+    }
+  }));
 
 // No file bombs here
 app.use(bodyParser.json({
     limit: '20mb'
     }));
+
+
 
 console.log('open on port: ' + port);
 
@@ -45,46 +74,6 @@ app.get('/registerUser', cors(), (req, res, next)=> {
 });
 });
 
-/*app.get('/users', cors(), (req, res, next) => {
-        console.log("Users endpoint called");
-        for (const key in req.query) {
-        //console.log(key)
-       // console.log(req.query[key]);
-        }
-        pwd = req.query.password;
-        username = req.query.username;
-        flag = false;
-        con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
-            if (results)
-            {
-                flag = false;
-                Object.keys(results).forEach(function(key) {
-                    var row = results[key];
-                    if (row.username === username && row.password === pwd)
-                    {
-                        flag = true;
-                    }
-                    //console.log(row.username)
-                    //console.log(row.password)
-                  });
-                //console.log(results.user);
-            }
-            console.log("This is flag:" + flag);
-            var final_results;
-            if (flag === true)
-            {
-                final_results = 1;
-            }
-            else
-            {
-                final_results = 0;
-            }
-            console.log("THIS IS RESULTS: " + results);
-            return res.send({ error: false, data: final_results, message: 'users list.' });
-            
-        }); 
-})
-*/
 app.get('/search', cors(), (req, res, next) => {
     db.search(req, res).then(result => {
         res.send(result);
@@ -127,3 +116,6 @@ con.connect(function(err) {
     });
    
 module.exports = con;
+
+port = process.env.PORT || 3002;
+app.listen(port);
