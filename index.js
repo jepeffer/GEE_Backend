@@ -6,8 +6,8 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var fs = require('fs');
 var multer = require('multer');
-var upload = multer({dest: DIR});
 var DIR = '/root/Resources';
+var upload = multer({dest: DIR});
 var port = 3002;
 
 app = express();
@@ -47,7 +47,6 @@ if (!req.file) {
     })
     }
 });
-console.log('open on port: ' + port);
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -121,6 +120,6 @@ con.connect(function(err) {
     });
    
 module.exports = con;
-
 port = process.env.PORT || 3002;
 app.listen(port);
+console.log('open on port: ' + port);
