@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var fs = require('fs');
 var multer = require('multer');
-
+var path = require('path')
 var DIR = '/root/Resources';
 
 var storage = multer.diskStorage({
