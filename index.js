@@ -6,8 +6,20 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var fs = require('fs');
 var multer = require('multer');
+
 var DIR = '/root/Resources';
-var upload = multer({dest: DIR});
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, DIR)
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
+    }
+  })
+  
+
+var upload = multer({storage:storage});
 var port = 3002;
 
 app = express();
