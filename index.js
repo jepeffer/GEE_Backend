@@ -41,7 +41,7 @@ if (!req.file) {
     });
 
     } else {
-    console.log('file received successfully');
+    console.log('file received successfully' + req.file.originalname);
     return res.send({
         success: true
     })
