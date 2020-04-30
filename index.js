@@ -14,7 +14,7 @@ var storage = multer.diskStorage({
       cb(null, DIR)
     },
     filename: function (req, file, cb) {
-      cb(null, file.filename + path.extname(file.originalname)) //Appending extension
+      cb(null, file.originalname.substring(0, file.originalname.length - 3) + path.extname(file.originalname)) //Appending extension
     }
   })
   
