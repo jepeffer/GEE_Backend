@@ -61,37 +61,6 @@ module.exports.getUsers = async (req) => {
     let results = await pool.query(query);
     console.log("The results are " + results);
     return results;
-    var file = `/root/Resources/test.txt`;
-    var r  = "";
-    if (req.query.subject)
-    {
-      r = r + "Subject Found,";
-      console.log("Subject found!");
-    }
-    if (req.query.gradeLevel)
-    {
-      r = r + "Grade Level Found,";
-      console.log("Grade Level found!");
-    }
-    if (req.query.contentType)
-    {
-      r = r + "Content Type Found,";
-      console.log("ContentType found!");
-    }
-    if (req.query.includes)
-    {
-      r = r + "Includes Found,";
-      console.log("ContentType found!");
-    }
-    if (req.query.keywords) {
-      r = r + "Keyword found Found";
-      console.log("Keyword found!");
-      return r; // All was added correctly.
-    } 
-    
-    else {
-      return file;
-    }
   };
 
   module.exports.upload = async (req) => {
