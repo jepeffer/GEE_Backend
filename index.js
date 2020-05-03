@@ -41,11 +41,11 @@ app.use(bodyParser.json({
     limit: '20mb'
     }));
 
-app.get('/api', cors(), function (req, res) {
+app.get('/api', function (req, res) {
         res.end('file catcher example');
       });
        
-app.post('/api/upload', cors(), function (req, res) {
+app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
   console.log("I made it");
 if (!req.file) {
     console.log("No file received");
@@ -60,7 +60,6 @@ if (!req.file) {
     })
     }
 });
-
 var con = mysql.createConnection({
     host: "localhost",
     user: "foo",
