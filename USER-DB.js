@@ -57,6 +57,10 @@ module.exports.getUsers = async (req) => {
   
 
   module.exports.search = async (req) => {
+    let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%'";
+    let results = await pool.query(query);
+    console.log("The results are " + results);
+    return results;
     var file = `/root/Resources/test.txt`;
     var r  = "";
     if (req.query.subject)
@@ -86,7 +90,7 @@ module.exports.getUsers = async (req) => {
     } 
     
     else {
-    return file;
+      return file;
     }
   };
 
