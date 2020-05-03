@@ -3,17 +3,62 @@ var mysql = require('mysql');
 const cors = require('cors');
 const db = require('./USER-DB');
 var bodyParser = require('body-parser');
-var express = require('express'),
-app = express(),
-port = process.env.PORT || 3002;
-app.listen(port);
+var express = require('express');
+var fs = require('fs');
+var multer = require('multer');
+var path = require('path')
+var DIR = '/root/Resources';
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, DIR)
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname.substring(0, file.originalname.length - 3) + path.extname(file.originalname)) //Appending extension
+    }
+  })
+  
+
+var upload = multer({storage:storage});
+var port = 3002;
+
+app = express();
+
+
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://valor-software.github.io');
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+  });
+
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({extended: true}));
 
 // No file bombs here
 app.use(bodyParser.json({
     limit: '20mb'
     }));
 
-console.log('open on port: ' + port);
+app.get('/api', function (req, res) {
+        res.end('file catcher example');
+      });
+       
+app.post('/api/upload',upload.single('file'), function (req, res) {
+if (!req.file) {
+    console.log("No file received");
+    return res.send({
+        success: false
+    });
+
+    } else {
+    console.log('file received successfully' + req.file.originalname);
+    return res.send({
+        success: true
+    })
+    }
+});
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -27,7 +72,7 @@ app.get('/', function(req, res){
 
 users = require ('./models/user');
 
-app.get('/userstest', cors(), (req, res, next)=> {
+app.get('/users', cors(), (req, res, next)=> {
     db.getUsers(req, res).then(result => {
     res.send(result);
 }, reject => {
@@ -45,47 +90,8 @@ app.get('/registerUser', cors(), (req, res, next)=> {
 });
 });
 
-app.get('/users', cors(), (req, res, next) => {
-        console.log("Users endpoint called");
-        for (const key in req.query) {
-        //console.log(key)
-       // console.log(req.query[key]);
-        }
-        pwd = req.query.password;
-        username = req.query.username;
-        flag = false;
-        con.query('SELECT * FROM GEE_DB.Users', function (error, results, fields) {
-            if (results)
-            {
-                flag = false;
-                Object.keys(results).forEach(function(key) {
-                    var row = results[key];
-                    if (row.username === username && row.password === pwd)
-                    {
-                        flag = true;
-                    }
-                    //console.log(row.username)
-                    //console.log(row.password)
-                  });
-                //console.log(results.user);
-            }
-            console.log("This is flag:" + flag);
-            var final_results;
-            if (flag === true)
-            {
-                final_results = 1;
-            }
-            else
-            {
-                final_results = 0;
-            }
-            console.log("THIS IS RESULTS: " + results);
-            return res.send({ error: false, data: final_results, message: 'users list.' });
-            
-        }); 
-})
-
 app.get('/search', cors(), (req, res, next) => {
+  console.log("Search");
     db.search(req, res).then(result => {
         res.send(result);
     }, reject => {
@@ -127,3 +133,6 @@ con.connect(function(err) {
     });
    
 module.exports = con;
+port = process.env.PORT || 3002;
+app.listen(port);
+console.log('open on port: ' + port);
