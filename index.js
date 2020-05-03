@@ -46,6 +46,7 @@ app.get('/api', function (req, res) {
       });
        
 app.post('/api/upload',upload.single('file'), function (req, res) {
+  console.log("I made it");
 if (!req.file) {
     console.log("No file received");
     return res.send({
