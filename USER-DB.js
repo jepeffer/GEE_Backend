@@ -88,9 +88,10 @@ module.exports.getUsers = async (req) => {
       }
     }
 
-    for(var x = 0; x < CCCmatches.length; x++){
-      console.log(CCCmatches[x].tags);
-    }
+    console.log(CCCmatches);
+    //for(var x = 0; x < CCCmatches.length; x++){
+    //  console.log(CCCmatches[x].tags);
+    //}
 
     return results;
   };
