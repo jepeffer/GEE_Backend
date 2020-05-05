@@ -60,19 +60,36 @@ module.exports.getUsers = async (req) => {
     let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%'";
     let results = await pool.query(query);
     let CCCtags = ["Patterns","Cause and Effect", "Scale, Proportion, and Quantity", "Systems and System Models", "Energy and Matter", "Structure and Function", "Stability and Change", "Interdependence of Science, Engineering, and Technology", "Influence of Engineering, Technology, and Science on Society and the Natural World"];
+    let DCItags = ["Structure and Properties of Matter", "Chemical Reactions", "Nuclear Processes", "Forces and Motion", "Types of Interactions", "Definitions of Energy", "Conservation of Energy and Energy Transfer", "Relationship Between Energy and Forces", "Energy in Chemical Processes and Everyday Life", "Wave Properties", "Electromagnetic Radiation", "Information Technologies and Instrumentation", "Structure and Function", "Growth and Development of Organisms", "Growth and Development of Organisms", "Information Processing", "Interdependent Relationships in Ecosystems", "Cycles of Matter and Energy Transfer in Ecosystems", "Ecosystems Dynamics, Functioning and Resilience", "Social Interactions and Group Behavior", "Inheritance of Traits", "Variation of Traits", "Evidence of Common Ancestry and Diversity", "Natural Selection", "Natural Selection", "Adaptation", "Biodiversity and Humans", "The Universe and its Stars", "Earth and the Solar System", "The History of Planet Earth", "Earth Materials and Systems", "Plate Tectonics and Large-Scale Systems", "The Role of Water in Earth’s Surface Processes", "Weather and Climate", "Biogeology", "Natural Resources", "Natural Hazards", "Human Impacts on Earth Systems", "Global Climate Change", "Defining and Delimiting and Engineering Problem", "Developing Possible Solutions", "Optimizing the Design Solution"]
+    let PItags = ["Quiz", "Assessment", "Test", "Exam"];
+    let Practicetags = ["Asking Questions and Defining Problems", "Developing and Using Models", "Planning and Carrying Out Investigations", "Analyzing and Interpreting Data", "Using Mathematics and Computational Thinking", "Constructing Explanations and Designing Solutions", "Engaging in Argument from Evidence", "Obtaining, Evaluating, and Communicating Information"];
 
-    let matches = 0;
+    let CCCmatches;
+    let DCImatches;
+    let PImatches;
+    let Practicematches;
+
     for (let i = 0; i < results.length; i++){
       for(let y = 0; y < CCCtags.length; y++){
         let tags = results[i].tags;
         if(tags.includes(CCCtags[y])){
-          console.log("We have a match!");
-          matches = matches + 1;
+          CCCmatches = CCCmatches + results[i];
+        }
+        if(tags.includes(DCItags[y])){
+          DCImatches = DCImatches + results[i];
+        }
+        if(tags.includes(PItags[y])){
+          PImatches = PImatches + results[i];
+        }
+        if(tags.includes(Practicetags[y])){
+          Practicematches = Practicematches + results[i];
         }
       }
     }
 
-    console.log("We had " + matches + " matches.");
+    for(var match in CCCmatches){
+      console.log(match);
+    }
 
     return results;
   };
