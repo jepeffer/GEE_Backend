@@ -61,7 +61,7 @@ module.exports.getUsers = async (req) => {
     let results = await pool.query(query);
 
     for (let i = 0; i < results.length; i++){
-      let keywords = results[i].keywords;
+      let keywords = results[i].tags;
       console.log("Keywords: " + keywords);
     }
 
