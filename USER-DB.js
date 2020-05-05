@@ -61,7 +61,7 @@ module.exports.getUsers = async (req) => {
     let results = await pool.query(query);
     
     for(let result in results){
-      console.log(result[1].keywords);
+      console.log(result.author);
     }
 
     return results;
