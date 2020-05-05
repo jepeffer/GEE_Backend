@@ -63,12 +63,10 @@ module.exports.getUsers = async (req) => {
 
     let matches = 0;
     for (let i = 0; i < results.length; i++){
-      for(let x = 0; x < results[i].tags.length; x++){
-        for(let y = 0; y < CCCtags.length; y++){
-          if(results[i].tags[x].contains(CCCtags[y])){
-            console.log("We have a match!");
-            matches = matches + 1;
-          }
+      for(let y = 0; y < CCCtags.length; y++){
+        if(results[i].tags.contains(CCCtags[y])){
+          console.log("We have a match!");
+          matches = matches + 1;
         }
       }
     }
