@@ -73,16 +73,16 @@ module.exports.getUsers = async (req) => {
       for(let y = 0; y < CCCtags.length; y++){
         let tags = results[i].tags;
         if(tags.includes(CCCtags[y])){
-          CCCmatches.add(result[i]);
+          CCCmatches.add(results[i]);
         }
         if(tags.includes(DCItags[y])){
-          DCImatches.add(result[i]);
+          DCImatches.add(results[i]);
         }
         if(tags.includes(PItags[y])){
-          PImatches.add(result[i]);
+          PImatches.add(results[i]);
         }
         if(tags.includes(Practicetags[y])){
-          Practicematches.add(result[i]);
+          Practicematches.add(results[i]);
         }
       }
     }
