@@ -74,6 +74,7 @@ module.exports.getUsers = async (req) => {
         let tags = results[i].tags;
         if(tags.includes(CCCtags[y])){
           CCCmatches = CCCmatches + results[i];
+          console.log(results[i].author);
         }
         if(tags.includes(DCItags[y])){
           DCImatches = DCImatches + results[i];
@@ -88,7 +89,7 @@ module.exports.getUsers = async (req) => {
     }
 
     for(var x = 0; x < CCCmatches.length; x++){
-      console.log(CCCmatches[x].tags);
+      console.log(CCCmatches[x].author);
     }
 
     return results;
