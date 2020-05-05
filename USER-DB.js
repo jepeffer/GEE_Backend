@@ -88,7 +88,7 @@ module.exports.getUsers = async (req) => {
     }
 
     for(var x = 0; x < CCCmatches.length; x++){
-      console.log(CCCmatches[x].author);
+      console.log(CCCmatches[x].tags);
     }
 
     return results;
