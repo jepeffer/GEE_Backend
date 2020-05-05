@@ -65,7 +65,7 @@ module.exports.getUsers = async (req) => {
     for (let i = 0; i < results.length; i++){
       for(let y = 0; y < CCCtags.length; y++){
         let tags = results[i].tags;
-        if(tags.contains(CCCtags[y])){
+        if(tags.includes(CCCtags[y])){
           console.log("We have a match!");
           matches = matches + 1;
         }
