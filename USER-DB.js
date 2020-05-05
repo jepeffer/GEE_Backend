@@ -90,11 +90,13 @@ module.exports.getUsers = async (req) => {
     // At this point, we have all of the results that match one of the 4 categories of standards
     // Now we want to sort through
 
+    let final = [];
+
     for(var x = 0; x < CCCmatches.length; x++){
-      console.log(CCCmatches[x].description);
+      final.push(CCCmatches[x]);
     }
 
-    return results;
+    return final;
   };
 
   module.exports.upload = async (req) => {
