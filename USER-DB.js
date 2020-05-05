@@ -62,7 +62,7 @@ module.exports.getUsers = async (req) => {
 
     for (let i = 0; i < results.length; i++){
       let keywords = results[i].keywords;
-      console.log(keywords);
+      console.log("Keywords: " + keywords);
     }
 
     return results;
