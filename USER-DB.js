@@ -60,8 +60,8 @@ module.exports.getUsers = async (req) => {
     let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%'";
     let results = await pool.query(query);
     
-    for(var result in results){
-      if(result.keywords.contains("Patterns")){
+    for(let result in results){
+      if(result.length > 1){
         console.log(result.keywords);
       }
     }
