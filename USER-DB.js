@@ -87,10 +87,12 @@ module.exports.getUsers = async (req) => {
       }
     }
 
+    // At this point, we have all of the results that match one of the 4 categories of standards
+    // Now we want to sort through
+
     for(var x = 0; x < CCCmatches.length; x++){
       console.log(CCCmatches[x].description);
     }
-    console.log(CCCmatches.length);
 
     return results;
   };
