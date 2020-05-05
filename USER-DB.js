@@ -61,8 +61,8 @@ module.exports.getUsers = async (req) => {
     let results = await pool.query(query);
     
     for(var result in results){
-      if(result.contains("Patterns")){
-        console.log(result);
+      if(result.keywords.contains("Patterns")){
+        console.log(result.keywords);
       }
     }
 
