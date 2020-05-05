@@ -69,21 +69,29 @@ module.exports.getUsers = async (req) => {
     let PImatches;
     let Practicematches;
 
+    let CCCsize = 0;
+    let DCIsize = 0;
+    let PIsize = 0;
+    let Practicesize = 0;
+
     for (let i = 0; i < results.length; i++){
       for(let y = 0; y < CCCtags.length; y++){
         let tags = results[i].tags;
         if(tags.includes(CCCtags[y])){
-          CCCmatches = CCCmatches + results[i];
-          console.log(results[i].tags);
+          CCCmatches[CCCsize] = results[i];
+          CCCsize++;
         }
         if(tags.includes(DCItags[y])){
-          DCImatches = DCImatches + results[i];
+          DCImatches[DCIsize] = results[i];
+          DCIsize++;
         }
         if(tags.includes(PItags[y])){
-          PImatches = PImatches + results[i];
+          PImatches[PIsize] = results[i];
+          PIsize++;
         }
         if(tags.includes(Practicetags[y])){
-          Practicematches = Practicematches + results[i];
+          Practicematches = results[i];
+          Practicesize++;
         }
       }
     }
