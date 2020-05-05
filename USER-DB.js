@@ -59,11 +59,21 @@ module.exports.getUsers = async (req) => {
   module.exports.search = async (req) => {
     let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%'";
     let results = await pool.query(query);
+    let CCCtags = ["Patterns","Cause and Effect", "Scale, Proportion, and Quantity", "Systems and System Models", "Energy and Matter", "Structure and Function", "Stability and Change", "Interdependence of Science, Engineering, and Technology", "Influence of Engineering, Technology, and Science on Society and the Natural World"];
 
+    let matches = 0;
     for (let i = 0; i < results.length; i++){
-      let keywords = results[i].tags;
-      console.log("Keywords: " + keywords);
+      for(let x = 0; x < results[i].tags.length; x++){
+        for(let y = 0; y < CCCtags.length; y++){
+          if(results[i].tags[x].contains(CCCtags[y])){
+            console.log("We have a match!");
+            matches = matches + 1;
+          }
+        }
+      }
     }
+
+    console.log("We had " + matches + " matches.");
 
     return results;
   };
