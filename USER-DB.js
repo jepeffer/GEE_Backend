@@ -106,11 +106,6 @@ module.exports.getUsers = async (req) => {
       r = r + "File Title Found,";
       console.log("fileTitle found!")
     }
-    if (req.query.tags)
-    {
-      r = r + "Tags Found,";
-      console.log("Tags found!")
-    }
     if (req.query.contentDescription) {
       r = r + "Content Description";
       console.log("contentDescription found!")
