@@ -101,11 +101,6 @@ module.exports.getUsers = async (req) => {
 
   module.exports.upload = async (req) => {
     var r  = ""
-    if (req.query.fileTitle)
-    {
-      r = r + "File Title Found,";
-      console.log("fileTitle found!")
-    }
     if (req.query.description) {
       r = r + "Content Description";
       console.log("contentDescription found!")
