@@ -91,6 +91,7 @@ app.get('/registerUser', cors(), (req, res, next)=> {
 });
 
 app.get('/search', cors(), (req, res, next) => {
+  console.log("Search");
     db.search(req, res).then(result => {
         res.send(result);
     }, reject => {

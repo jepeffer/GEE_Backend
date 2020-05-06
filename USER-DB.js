@@ -59,39 +59,44 @@ module.exports.getUsers = async (req) => {
   module.exports.search = async (req) => {
     let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%'";
     let results = await pool.query(query);
-    console.log("The results are " + results);
-    return results;
-    var file = `/root/Resources/test.txt`;
-    var r  = "";
-    if (req.query.subject)
-    {
-      r = r + "Subject Found,";
-      console.log("Subject found!");
+    let CCCtags = ["Patterns","Cause and Effect", "Scale, Proportion, and Quantity", "Systems and System Models", "Energy and Matter", "Structure and Function", "Stability and Change", "Interdependence of Science, Engineering, and Technology", "Influence of Engineering, Technology, and Science on Society and the Natural World"];
+    let DCItags = ["Structure and Properties of Matter", "Chemical Reactions", "Nuclear Processes", "Forces and Motion", "Types of Interactions", "Definitions of Energy", "Conservation of Energy and Energy Transfer", "Relationship Between Energy and Forces", "Energy in Chemical Processes and Everyday Life", "Wave Properties", "Electromagnetic Radiation", "Information Technologies and Instrumentation", "Structure and Function", "Growth and Development of Organisms", "Growth and Development of Organisms", "Information Processing", "Interdependent Relationships in Ecosystems", "Cycles of Matter and Energy Transfer in Ecosystems", "Ecosystems Dynamics, Functioning and Resilience", "Social Interactions and Group Behavior", "Inheritance of Traits", "Variation of Traits", "Evidence of Common Ancestry and Diversity", "Natural Selection", "Natural Selection", "Adaptation", "Biodiversity and Humans", "The Universe and its Stars", "Earth and the Solar System", "The History of Planet Earth", "Earth Materials and Systems", "Plate Tectonics and Large-Scale Systems", "The Role of Water in Earth’s Surface Processes", "Weather and Climate", "Biogeology", "Natural Resources", "Natural Hazards", "Human Impacts on Earth Systems", "Global Climate Change", "Defining and Delimiting and Engineering Problem", "Developing Possible Solutions", "Optimizing the Design Solution"]
+    let PItags = ["Quiz", "Assessment", "Test", "Exam"];
+    let Practicetags = ["Asking Questions and Defining Problems", "Developing and Using Models", "Planning and Carrying Out Investigations", "Analyzing and Interpreting Data", "Using Mathematics and Computational Thinking", "Constructing Explanations and Designing Solutions", "Engaging in Argument from Evidence", "Obtaining, Evaluating, and Communicating Information"];
+
+    let CCCmatches = [];
+    let DCImatches = [];
+    let PImatches = [];
+    let Practicematches = [];
+
+    for (let i = 0; i < results.length; i++){
+      for(let y = 0; y < CCCtags.length; y++){
+        let tags = results[i].tags;
+        if(tags.includes(CCCtags[y])){
+          CCCmatches.push(results[i]);
+        }
+        if(tags.includes(DCItags[y])){
+          DCImatches.push(results[i]);
+        }
+        if(tags.includes(PItags[y])){
+          PImatches.push(results[i]);
+        }
+        if(tags.includes(Practicetags[y])){
+          Practicematches.push(results[i]);
+        }
+      }
     }
-    if (req.query.gradeLevel)
-    {
-      r = r + "Grade Level Found,";
-      console.log("Grade Level found!");
+
+    // At this point, we have all of the results that match one of the 4 categories of standards
+    // Now we want to sort through
+
+    let final = [];
+
+    for(var x = 0; x < CCCmatches.length; x++){
+      final.push(CCCmatches[x]);
     }
-    if (req.query.contentType)
-    {
-      r = r + "Content Type Found,";
-      console.log("ContentType found!");
-    }
-    if (req.query.includes)
-    {
-      r = r + "Includes Found,";
-      console.log("ContentType found!");
-    }
-    if (req.query.keywords) {
-      r = r + "Keyword found Found";
-      console.log("Keyword found!");
-      return r; // All was added correctly.
-    } 
-    
-    else {
-      return file;
-    }
+
+    return final;
   };
 
   module.exports.upload = async (req) => {
