@@ -50,13 +50,13 @@ app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
 if (!req.file) {
     console.log("No file received");
     return res.send({
-        success: false
+        success: 2
     });
 
     } else {
     console.log('file received successfully' + req.file.originalname);
     return res.send({
-        success: true
+        success: 0
     })
     }
 });
