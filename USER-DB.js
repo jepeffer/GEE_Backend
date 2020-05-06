@@ -106,7 +106,7 @@ module.exports.getUsers = async (req) => {
       r = r + "File Title Found,";
       console.log("fileTitle found!")
     }
-    if (req.query.contentDescription) {
+    if (req.query.description) {
       r = r + "Content Description";
       console.log("contentDescription found!")
       return r; // All was added correctly.
