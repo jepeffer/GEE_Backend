@@ -102,7 +102,7 @@ module.exports.getUsers = async (req) => {
   module.exports.upload = async (req) => {
     var r  = ""
     if (req.query.description) {
-      r = r + "Content Description";
+      r = r + "Content Description:" + "Content Description";
       console.log("contentDescription found!")
       return r; // All was added correctly.
     } 
