@@ -100,7 +100,35 @@ module.exports.getUsers = async (req) => {
   };
 
   module.exports.upload = async (req) => {
-    var r  = ""
+    var description = req.query.description;
+    var license = req.query.license;
+    var subject = req.query.subject;
+    var fileTitle = req.query.fileTitle;
+    var grade = req.query.graveLevel;
+    var tags = req.query.tags;
+    var video = req.query.video;
+    var labs = req.query.labs;
+    var exams = req.query.exams;
+    var worksheets = req.query.worksheets;
+    var meda_format = "";
+
+    if (video != "")
+    {
+      media_format += video + ",";
+    }
+    if (labs != "")
+    {
+      media_format += labs + ",";
+    }
+    if (exams != "")
+    {
+      media_format += exams + ",";
+    }
+    if (worksheets != "")
+    {
+      media_format += worksheets + ",";
+    }
+    insert_statement = "INSERT INTO OER (userid, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes) VALUES (0,{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10});".format(author, fileTitle,description,name,subject,media_format, license,date_added,grade,0,tags,"none")
     if (req.query.description) {
       r = r + "Content Description:" + "Content Description";
       console.log("contentDescription found!")
