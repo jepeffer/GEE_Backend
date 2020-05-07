@@ -145,7 +145,7 @@ module.exports.getUsers = async (req) => {
     }
     var filelocation = "/root/Resources/" + fileTitle;
     insert_statement = "INSERT INTO OER (userid, pdflocation, ziplocation, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes) VALUES ({11},{12},{13},{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10});".format(userid, pdflocation, ziplocation, author, fileTitle,description,name,subject,media_format, license,String(Date.now),grade,0,tags,"none", userid)
-    let result = await pool.query(insert_statement);
+    result = await pool.query(insert_statement);
    if (result)
    {
      return 'GOOD';
