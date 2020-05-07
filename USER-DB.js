@@ -100,6 +100,9 @@ module.exports.getUsers = async (req) => {
   };
 
   module.exports.upload = async (req) => {
+    var filename = String(req.query.filename);
+    var filetype = filename.substring(filename.length - 3, filename.length)
+    console.log("THE FILE TYPE IS " + filetype);
     var description = req.query.description;
     var license = req.query.license;
     var subject = req.query.subject;
