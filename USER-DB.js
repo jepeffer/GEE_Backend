@@ -139,7 +139,7 @@ module.exports.getUsers = async (req) => {
     var pdflocation = "";
     if (filetype == "pdf")
     {
-      pdflocation = "/root/Resources/" + fileTitle + filename;
+      pdflocation = "/root/Resources/" + fileTitle + "/" + filename;
     }
     var filelocation = "/root/Resources/" + fileTitle;
     let ziplocation = filelocation + ".zip";
@@ -147,7 +147,7 @@ module.exports.getUsers = async (req) => {
    // var date_now = dateobj.toString();
     var date_now = "NOW";
     insert_statement = "INSERT INTO OER (userid, pdflocation, ziplocation, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes) VALUES" + 
-    "(" + userid + ",\"" + pdflocation + "\"" + ",\"" + ziplocation + "\"" + ",\"" + username + "\"" +",\"" + filelocation + ",\"" + description + "\"" + ",\"" + fileTitle + "\"" + ",\"" + subject + "\"" + ",\"" + media_format + "\"" + ",\"" + license + "\"" + ",\"" + date_now + "\"" + ",\"" + grade + "\"," + 0 + ",\"" + tags + ",\"none\");"
+    "(" + userid + ",\"" + pdflocation + "\"" + ",\"" + ziplocation + "\"" + ",\"" + username + "\"" +",\"" + filelocation + ",\"" + description + "\"" + ",\"" + fileTitle + "\"" + ",\"" + subject + "\"" + ",\"" + media_format + "\"" + ",\"" + license + "\"" + ",\"" + date_now + "\"" + ",\"" + grade + "\"," + 0 + ",\"" + tags + "\",\"none\");"
     console.log("This is the insert statement" + insert_statement)
     result = await pool.query(insert_statement);
    if (result)
