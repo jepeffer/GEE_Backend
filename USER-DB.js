@@ -114,7 +114,7 @@ module.exports.getUsers = async (req) => {
     var worksheets = req.query.worksheets;
     var media_format = "";
     var username = req.query.username;
-    let find_user_id_query = "SELECT userid FROM Users WHERE username = '" + username;
+    let find_user_id_query = "SELECT userid FROM Users WHERE username = '" + username + "'";
     let result = await pool.query(find_user_id_query);
     if (result.length) // User is already taken!
     {
