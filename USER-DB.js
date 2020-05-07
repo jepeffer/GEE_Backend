@@ -101,8 +101,7 @@ module.exports.getUsers = async (req) => {
 
   module.exports.upload = async (req) => {
     var filename = String(req.query.filename);
-    var filetype = filename.substring(filename.length - 3, filename.length)
-    console.log("THE FILE TYPE IS " + filetype);
+    var filetype = filename.substring(filename.length - 3, filename.length);
     var description = req.query.description;
     var license = req.query.license;
     var subject = req.query.subject;
@@ -116,7 +115,7 @@ module.exports.getUsers = async (req) => {
     var media_format = "";
     var username = req.query.username;
     let find_user_id_query = "SELECT userid FROM Users WHERE username = '" + username;
-    let result = await pool.query(query);
+    let result = await pool.query(find_user_id_query);
     if (result.length) // User is already taken!
     {
         userid = result[0];
@@ -139,12 +138,18 @@ module.exports.getUsers = async (req) => {
     {
       media_format += worksheets + ",";
     }
-    insert_statement = "INSERT INTO OER (userid, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes) VALUES ({11},{12},{13},{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10});".format(author, fileTitle,description,name,subject,media_format, license,date_added,grade,0,tags,"none", userid)
-    if (req.query.description) {
-      r = r + "Content Description:" + "Content Description";
-      console.log("contentDescription found!")
-      return r; // All was added correctly.
-    } 
+    var pdflocation = "";
+    if (filetype == "pdf")
+    {
+      pdflocation = "/root/Resources/" + fileTitle + filename;
+    }
+    var filelocation = "/root/Resources/" + fileTitle;
+    insert_statement = "INSERT INTO OER (userid, pdflocation, ziplocation, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes) VALUES ({11},{12},{13},{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10});".format(userid, pdflocation, ziplocation, author, fileTitle,description,name,subject,media_format, license,String(Date.now),grade,0,tags,"none", userid)
+    let result = await pool.query(insert_statement);
+   if (result)
+   {
+     return 'GOOD';
+   }
     
     else {
       console.error(new Date().toISOString(), req.path, `Search result was incomplete ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
