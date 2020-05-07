@@ -112,7 +112,7 @@ app.get('/upload', cors(), (req, res, next) => {
 })
 
 app.get('/download',cors(), function(req, res){
-    file_location = req.query.file_location;
+    file_location = String(req.query.file_location);
     res.download(file_location); // Set disposition and send it.
   });
 
