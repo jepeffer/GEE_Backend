@@ -149,7 +149,6 @@ module.exports.getUsers = async (req) => {
     insert_statement = "INSERT INTO OER (userid, pdflocation, ziplocation, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes, tags, remix) VALUES" + 
     "(" + userid + ",\"" + pdflocation + "\"" + ",\"" + ziplocation + "\"" + ",\"" + username + "\"" +",\"" + filelocation + ",\"" + description + "\"" + ",\"" + fileTitle + "\"" + ",\"" + subject + "\"" + ",\"" + media_format + "\"" + ",\"" + license + "\"" + ",\"" + date_now + "\"" + ",\"" + grade + "\"," + 0 + ",\"" + tags + "\",\"none\");"
     console.log("This is the insert statement" + insert_statement)
-    result = await pool.query(insert_statement);
    if (result)
    {
      return 'GOOD';
