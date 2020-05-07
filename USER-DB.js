@@ -100,24 +100,37 @@ module.exports.getUsers = async (req) => {
   };
 
   module.exports.upload = async (req) => {
-    var r  = ""
-    if (req.query.fileTitle)
+    var description = req.query.description;
+    var license = req.query.license;
+    var subject = req.query.subject;
+    var fileTitle = req.query.fileTitle;
+    var grade = req.query.graveLevel;
+    var tags = req.query.tags;
+    var video = req.query.video;
+    var labs = req.query.labs;
+    var exams = req.query.exams;
+    var worksheets = req.query.worksheets;
+    var meda_format = "";
+
+    if (video != "")
     {
-      r = r + "File Title Found,";
-      console.log("fileTitle found!")
+      media_format += video + ",";
     }
-    if (req.query.tags)
+    if (labs != "")
     {
-      r = r + "Tags Found,";
-      console.log("Tags found!")
+      media_format += labs + ",";
     }
-    if (req.query.includes)
+    if (exams != "")
     {
-      r = r + "Includes found";
-      console.log("Includes found!")
+      media_format += exams + ",";
     }
-    if (req.query.contentDescription) {
-      r = r + "Content Description";
+    if (worksheets != "")
+    {
+      media_format += worksheets + ",";
+    }
+    insert_statement = "INSERT INTO OER (userid, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes) VALUES (0,{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10});".format(author, fileTitle,description,name,subject,media_format, license,date_added,grade,0,tags,"none")
+    if (req.query.description) {
+      r = r + "Content Description:" + "Content Description";
       console.log("contentDescription found!")
       return r; // All was added correctly.
     } 
