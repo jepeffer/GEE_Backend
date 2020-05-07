@@ -110,8 +110,16 @@ module.exports.getUsers = async (req) => {
     var labs = req.query.labs;
     var exams = req.query.exams;
     var worksheets = req.query.worksheets;
-    var meda_format = "";
-
+    var media_format = "";
+    var username = req.query.username;
+    let find_user_id_query = "SELECT userid FROM Users WHERE username = '" + username;
+    let result = await pool.query(query);
+    if (result.length) // User is already taken!
+    {
+        userid = result[0];
+    }
+    console.log("This is the userid" + userid);
+    console.log("This is file location" +fileTitle)
     if (video != "")
     {
       media_format += video + ",";
@@ -128,7 +136,7 @@ module.exports.getUsers = async (req) => {
     {
       media_format += worksheets + ",";
     }
-    insert_statement = "INSERT INTO OER (userid, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes) VALUES (0,{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10});".format(author, fileTitle,description,name,subject,media_format, license,date_added,grade,0,tags,"none")
+    insert_statement = "INSERT INTO OER (userid, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes) VALUES ({11},{12},{13},{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10});".format(author, fileTitle,description,name,subject,media_format, license,date_added,grade,0,tags,"none", userid)
     if (req.query.description) {
       r = r + "Content Description:" + "Content Description";
       console.log("contentDescription found!")
