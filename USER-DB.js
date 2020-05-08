@@ -64,11 +64,7 @@ module.exports.getUsers = async (req) => {
     let PItags = ["Quiz", "Assessment", "Test", "Exam"];
     let Practicetags = ["Asking Questions and Defining Problems", "Developing and Using Models", "Planning and Carrying Out Investigations", "Analyzing and Interpreting Data", "Using Mathematics and Computational Thinking", "Constructing Explanations and Designing Solutions", "Engaging in Argument from Evidence", "Obtaining, Evaluating, and Communicating Information"];
 
-    let CCCmatches = [];
-    let DCImatches = [];
-    let PImatches = [];
-    let Practicematches = [];
-    let matches = CCCmatches, DCImatches, PImatches, Practicematches;
+    let matches = CCCmatches = [], DCImatches = [], PImatches = [], Practicematches = [];
 
     for (let i = 0; i < results.length; i++){
       for(let y = 0; y < CCCtags.length; y++){
