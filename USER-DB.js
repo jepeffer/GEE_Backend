@@ -89,12 +89,19 @@ module.exports.getUsers = async (req) => {
 
     // At this point, we have all of the results that match one of the 4 categories of standards
     // Now we want to sort through
+    // Score: other params are 3, general tags are 1
 
     let final = [];
-
+    let bestCCC;
+    let bestCCCscore = 0;
     for(var x = 0; x < CCCmatches.length; x++){
       final.push(CCCmatches[x]);
+      console.log(CCCmatches[x].description);
     }
+
+    final.push(bestCCC);
+
+
 
     return final;
   };
