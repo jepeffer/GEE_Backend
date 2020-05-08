@@ -99,6 +99,8 @@ module.exports.getUsers = async (req) => {
     for (let i = 0; i < results.length; i++){
       for(let y = 0; y < CCCtags.length; y++){
         let tags = results[i].tags;
+        let description = results[i].description;
+        console.log(description);
         if(tags.includes(CCCtags[y])){
           CCCmatches.push(results[i]);
         }
