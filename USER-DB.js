@@ -87,7 +87,7 @@ module.exports.getUsers = async (req) => {
       }
     }
 
-    let matches = CCCmatches, DCImatches, PImatches, Practicematches;
+    let matches = [CCCmatches, DCImatches, PImatches, Practicematches];
 
     // At this point, we have all of the results that match one of the 4 categories of standards
     // Now we want to sort through
