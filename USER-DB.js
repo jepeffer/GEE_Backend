@@ -128,7 +128,7 @@ module.exports.getUsers = async (req) => {
           bestReasons = entryReasons;
         }
       }
-      if(bestReasons != undefined){
+      if(bestReasons != ""){
         reasons = reasons + bestReasons;
         console.log(bestReasons);
       }else{
