@@ -97,7 +97,7 @@ module.exports.getUsers = async (req) => {
     let reasons = "";
     for(var z = 0; z < 4; z++){
       let bestEntry;
-      let bestEntryscore = 0;
+      let bestEntryScore = 0;
       let bestReasons = "";
       for(var x = 0; x < matches[z].length; x++){
         let entry = matches[z][x];
@@ -122,9 +122,9 @@ module.exports.getUsers = async (req) => {
           entryReasons = entryReasons+ "0";
         }
 
-        if(entryScore >= bestEntry){
+        if(entryScore >= bestEntryScore){
           bestEntry = entry;
-          bestEntryscore = entryScore;
+          bestEntryScore = entryScore;
           bestReasons = bestReasons + entryReasons;
         }
       }
