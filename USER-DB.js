@@ -92,15 +92,30 @@ module.exports.getUsers = async (req) => {
     for(var z = 0; z < 4; z++){
       let bestEntry;
       let bestEntryscore = 0;
+      let bestReasons = "";
       for(var x = 0; x < matches[z].length; x++){
         let entry = matches[z][x];
         let entryScore = 0;
         if(matches[z][x].grade == req.graveLevel){
           entryScore = entryScore + 3;
+          bestReasons = bestReasons + "1";
+        }else{
+          bestReasons = bestReasons + "0";
         }
         if(matches[z][x].subject == req.subject){
           entryScore = entryScore + 3;
+          bestReasons = bestReasons + "1";
+        }else{
+          bestReasons = bestReasons + "0";
         }
+        if(matches[z][x].contentType == req.contentType){
+          entryScore = entryScore + 3;
+          bestReasons = bestReasons + "1";
+        }else{
+          bestReasons = bestReasons + "0";
+        }
+
+
         if(entryScore > bestEntry){
           bestEntry = entry;
           bestEntryscore = entryScore;
