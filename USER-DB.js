@@ -132,7 +132,7 @@ module.exports.getUsers = async (req) => {
       final.push(bestEntry);
     }
 
-    if(reasons){
+    if(reasons != undefined){
       final.push(reasons);
     }else{
       final.push("000");
