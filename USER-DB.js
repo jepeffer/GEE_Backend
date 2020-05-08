@@ -132,8 +132,9 @@ module.exports.getUsers = async (req) => {
       final.push(bestEntry);
     }
 
-    if(reasons != undefined){
+    if(reasons != ""){
       final.push(reasons);
+      console.log("Here: " + reasons);
     }else{
       final.push("000");
     }
