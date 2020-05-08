@@ -64,7 +64,10 @@ module.exports.getUsers = async (req) => {
     let PItags = ["Quiz", "Assessment", "Test", "Exam"];
     let Practicetags = ["Asking Questions and Defining Problems", "Developing and Using Models", "Planning and Carrying Out Investigations", "Analyzing and Interpreting Data", "Using Mathematics and Computational Thinking", "Constructing Explanations and Designing Solutions", "Engaging in Argument from Evidence", "Obtaining, Evaluating, and Communicating Information"];
 
-    let matches = CCCmatches = [], DCImatches = [], PImatches = [], Practicematches = [];
+    let CCCmatches = [];
+    let DCImatches = [];
+    let PImatches = [];
+    let Practicematches = [];
 
     for (let i = 0; i < results.length; i++){
       for(let y = 0; y < CCCtags.length; y++){
@@ -83,6 +86,8 @@ module.exports.getUsers = async (req) => {
         }
       }
     }
+
+    let matches = CCCmatches, DCImatches, PImatches, Practicematches;
 
     // At this point, we have all of the results that match one of the 4 categories of standards
     // Now we want to sort through
