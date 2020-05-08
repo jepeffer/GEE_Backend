@@ -59,10 +59,37 @@ module.exports.getUsers = async (req) => {
   module.exports.search = async (req) => {
     let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%'";
     let results = await pool.query(query);
-    let CCCtags = ["Patterns","Cause and Effect", "Scale, Proportion, and Quantity", "Systems and System Models", "Energy and Matter", "Structure and Function", "Stability and Change", "Interdependence of Science, Engineering, and Technology", "Influence of Engineering, Technology, and Science on Society and the Natural World"];
-    let DCItags = ["Structure and Properties of Matter", "Chemical Reactions", "Nuclear Processes", "Forces and Motion", "Types of Interactions", "Definitions of Energy", "Conservation of Energy and Energy Transfer", "Relationship Between Energy and Forces", "Energy in Chemical Processes and Everyday Life", "Wave Properties", "Electromagnetic Radiation", "Information Technologies and Instrumentation", "Structure and Function", "Growth and Development of Organisms", "Growth and Development of Organisms", "Information Processing", "Interdependent Relationships in Ecosystems", "Cycles of Matter and Energy Transfer in Ecosystems", "Ecosystems Dynamics, Functioning and Resilience", "Social Interactions and Group Behavior", "Inheritance of Traits", "Variation of Traits", "Evidence of Common Ancestry and Diversity", "Natural Selection", "Natural Selection", "Adaptation", "Biodiversity and Humans", "The Universe and its Stars", "Earth and the Solar System", "The History of Planet Earth", "Earth Materials and Systems", "Plate Tectonics and Large-Scale Systems", "The Role of Water in Earth’s Surface Processes", "Weather and Climate", "Biogeology", "Natural Resources", "Natural Hazards", "Human Impacts on Earth Systems", "Global Climate Change", "Defining and Delimiting and Engineering Problem", "Developing Possible Solutions", "Optimizing the Design Solution"]
+    let CCCtags = 
+    ["Patterns","Cause and Effect", "Scale, Proportion, and Quantity", "Systems and System Models", "Energy and Matter", 
+    "Cause", "Effect", "Scale", "Proportion", "Quantity", "System", "System Models", "Function",
+     "Structure", "Stability", "Change", "Interdependence", "Stability", "Influence", 
+     "Interdependence", "Lab", "Energy", "Matter", "Energy and Matter", "Structure and Function", 
+     "Stability and Change", "Interdependence of Science, Engineering, and Technology",  
+     "Influence of Engineering, Technology, and Science on Society and the Natural World", "Society", "Natural World", "Influence", "Real life", "Labs", 
+     "Phenomena", "Pattern", "Organization", "Classification", "Relationship", "Relationships", "Causes", "Events", "Time scale", "Energy Scale", "Size Scale",
+    "Proportional", "Tracking", "Behavior", "Stability", "Rate of change", "Change", "Limitations", "Predict", "Influence", "Performance", "Model", "Models",
+  "Testing", "Relevant"];
+    
+    let DCItags = 
+    ["Structure and Properties of Matter", "Chemical Reactions", "Nuclear Processes", "Forces and Motion", "Types of Interactions", "Definitions of Energy", "Conservation of Energy and Energy Transfer", "Properties of Matter", "Chemical", "Reactions", "Nuclear", "Reactions", "Forces", "Motion", "Interactions", "Conservation", "Forces", "Motion",
+    "Relationship Between Energy and Forces", "Energy in Chemical Processes and Everyday Life", "Chemical Processes", "Energy", "Electromagnetic", "Radiation", "Information technology", "Instrumentation", "Function", "Technology", "Instrumentation", "Growth", "Development", "Organisms", "Information", "Processing", "Cycles", "Cycles of Matter", 
+    "Traits", "Evidence", "Common Ancestry", "Diversity", "Climate change", "Hazard", "Adaptation", "Biodiversity", "Humans", "Universe", "Stars", "Solar system", "Social Interactions", "Weather", "Climate", "Biogeolgy", "Natural", "Resources", "Engineering", "Engineering Problem", "Solutions", "Design", "Design solutions", "Human Impact", "Impact",
+    "Water", "Earth", "Materials", "Plate Tectonics", "Information", "Large-Scale",
+    "Wave Properties", "Electromagnetic Radiation", "Information Technologies and Instrumentation", 
+    "Structure and Function", "Growth and Development of Organisms", "Growth and Development of Organisms", "Information Processing", 
+    "Interdependent Relationships in Ecosystems", "Cycles of Matter and Energy Transfer in Ecosystems", 
+    "Ecosystems Dynamics, Functioning and Resilience", "Social Interactions and Group Behavior", 
+    "Inheritance of Traits", "Variation of Traits", "Evidence of Common Ancestry and Diversity", "Natural Selection", 
+    "Natural Selection", "Adaptation", "Biodiversity and Humans", "The Universe and its Stars", "Earth and the Solar System", 
+    "The History of Planet Earth", "Earth Materials and Systems", "Plate Tectonics and Large-Scale Systems", 
+    "The Role of Water in Earth’s Surface Processes", "Weather and Climate", "Biogeology", "Natural Resources", 
+    "Natural Hazards", "Human Impacts on Earth Systems", "Global Climate Change", 
+    "Defining and Delimiting and Engineering Problem", "Developing Possible Solutions", "Optimizing the Design Solution"]
     let PItags = ["Quiz", "Assessment", "Test", "Exam"];
-    let Practicetags = ["Asking Questions and Defining Problems", "Developing and Using Models", "Planning and Carrying Out Investigations", "Analyzing and Interpreting Data", "Using Mathematics and Computational Thinking", "Constructing Explanations and Designing Solutions", "Engaging in Argument from Evidence", "Obtaining, Evaluating, and Communicating Information"];
+    let Practicetags = 
+    ["Asking Questions and Defining Problems", "Developing and Using Models", "Planning and Carrying Out Investigations", "Analyzing and Interpreting Data", "Using Mathematics and Computational Thinking", 
+    "Constructing Explanations and Designing Solutions", "Engaging in Argument from Evidence", "Obtaining, Evaluating, and Communicating Information", "Questions", "Problems", "Model", "Models", "Investigation", "Investigations", 
+    "Analyzing", "Interpreting", "Data", "Computational", "Thinking", "Explanations", "Constructing", "Solutions", "Designing", "Evidence", "Argument", "Communication", "Communicating", "Information", "Evaluating", "Planning", "Asking questions"];
 
     let CCCmatches = [];
     let DCImatches = [];
