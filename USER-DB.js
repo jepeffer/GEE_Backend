@@ -68,6 +68,7 @@ module.exports.getUsers = async (req) => {
     let DCImatches = [];
     let PImatches = [];
     let Practicematches = [];
+    let matches = CCCmatches, DCImatches, PImatches, Practicematches;
 
     for (let i = 0; i < results.length; i++){
       for(let y = 0; y < CCCtags.length; y++){
@@ -92,21 +93,27 @@ module.exports.getUsers = async (req) => {
     // Score: other params are 3, general tags are 1
 
     let final = [];
-    let bestCCC;
-    let bestCCCscore = 0;
-    for(var x = 0; x < CCCmatches.length; x++){
-      let entry = CCCmatches[x];
-      let entryScore = 0;
-      if(CCCmatches[x].grade == req.graveLevel){
-        entryScore = entryScore + 3;
+    for(var z = 0; z < 4; z++){
+      let bestEntry;
+      let bestEntryscore = 0;
+      for(var x = 0; x < matches[z].length; x++){
+        let entry = matches[z][x];
+        let entryScore = 0;
+        if(matches[z][x].grade == req.graveLevel){
+          entryScore = entryScore + 3;
+        }
+        if(matches[z][x].subject == req.subject){
+          entryScore = entryScore + 3;
+        }
+        if(entryScore > bestEntry){
+          bestEntry = entry;
+          bestEntryscore = entryScore;
+        }
       }
-      if(entryScore > bestCCC){
-        bestCCC = entry;
-        bestCCCscore = entryScore;
-      }
+      final.push(bestEntry);
     }
 
-    final.push(bestCCC);
+    
 
     return final;
   };
