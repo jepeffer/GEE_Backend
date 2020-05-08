@@ -130,7 +130,6 @@ module.exports.getUsers = async (req) => {
       }
       if(bestReasons != ""){
         reasons = reasons + bestReasons;
-        console.log(bestReasons);
       }else{
         reasons = reasons + "000";
       }
