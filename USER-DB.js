@@ -97,6 +97,7 @@ module.exports.getUsers = async (req) => {
       for(var x = 0; x < matches[z].length; x++){
         let entry = matches[z][x];
         let entryScore = 0;
+        let entryReasons = "";
         if(matches[z][x].grade == req.graveLevel){
           entryScore = entryScore + 3;
           entryReasons = entryReasons + "1";
@@ -127,8 +128,7 @@ module.exports.getUsers = async (req) => {
       final.push(bestEntry);
     }
 
-    
-
+    //final.push(reasons);
     return final;
   };
 
