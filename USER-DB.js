@@ -95,13 +95,18 @@ module.exports.getUsers = async (req) => {
     let bestCCC;
     let bestCCCscore = 0;
     for(var x = 0; x < CCCmatches.length; x++){
-      final.push(CCCmatches[x]);
-      console.log(CCCmatches[x].description);
+      let entry = CCCmatches[x];
+      let entryScore = 0;
+      if(CCCmatches[x].grade == req.graveLevel){
+        entryScore = entryScore + 3;
+      }
+      if(entryScore > bestCCC){
+        bestCCC = entry;
+        bestCCCscore = entryScore;
+      }
     }
 
     final.push(bestCCC);
-
-
 
     return final;
   };
