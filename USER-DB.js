@@ -129,11 +129,10 @@ module.exports.getUsers = async (req) => {
         }
       }
       reasons = reasons + bestReasons;
-      console.log(bestEntry);
       final.push(bestEntry);
     }
 
-    //final.push(reasons);
+    final.push(reasons);
     return final;
   };
 
