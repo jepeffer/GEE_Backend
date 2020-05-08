@@ -122,7 +122,6 @@ module.exports.getUsers = async (req) => {
           entryReasons = entryReasons+ "0";
         }
 
-
         if(entryScore > bestEntry){
           bestEntry = entry;
           bestEntryscore = entryScore;
@@ -130,6 +129,7 @@ module.exports.getUsers = async (req) => {
         }
       }
       reasons = reasons + bestReasons;
+      console.log(bestEntry);
       final.push(bestEntry);
     }
 
