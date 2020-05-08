@@ -91,6 +91,7 @@ module.exports.getUsers = async (req) => {
     // Now we want to sort through
 
     let final = [];
+    let topScore = 0;
 
     for(var x = 0; x < CCCmatches.length; x++){
       final.push(CCCmatches[x]);
