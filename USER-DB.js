@@ -136,6 +136,7 @@ module.exports.getUsers = async (req) => {
       final.push(bestEntry);
     }
 
+    console.log(reasons);
     final.push(reasons);
     
     return final;
