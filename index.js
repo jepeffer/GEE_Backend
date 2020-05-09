@@ -8,10 +8,14 @@ var fs = require('fs');
 var multer = require('multer');
 var path = require('path')
 var DIR = '/root/Resources';
+var archiver = require('archiver');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, DIR)
+      if (!fs.existsSync(DIR + "/" + file.originalname)){
+        fs.mkdirSync(DIR + "/" + file.originalname);
+    }
+      cb(null, DIR + "/" + file.originalname)
     },
     filename: function (req, file, cb) {
       cb(null, file.originalname.substring(0, file.originalname.length - 3) + path.extname(file.originalname)) //Appending extension
@@ -46,7 +50,25 @@ app.get('/api', function (req, res) {
       });
        
 app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
-  console.log("I made it");
+  console.log("File recieved" + req.file.originalname);
+  var filetype = req.file.originalname.substring(req.file.originalname.length, req.file.originalname.length - 3)
+  if (filetype !== "zip")
+  {
+    var archive = archiver('zip');
+    archive
+    .append(fs.createReadStream(file1), { name: req.file.originalname })
+    .finalize();
+
+    archive.on('error', function(err) {
+      return res.send({
+        success: 3
+    });
+    });
+  }
+  else{
+    console.log("Not a zip: " + req.query.originalname);
+  }
+
 if (!req.file) {
     console.log("No file received");
     return res.send({

@@ -68,7 +68,7 @@ module.exports.getUsers = async (req) => {
      "Influence of Engineering, Technology, and Science on Society and the Natural World", "Society", "Natural World", "Influence", "Real life", "Labs", 
      "Phenomena", "Pattern", "Organization", "Classification", "Relationship", "Relationships", "Causes", "Events", "Time scale", "Energy Scale", "Size Scale",
     "Proportional", "Tracking", "Behavior", "Stability", "Rate of change", "Change", "Limitations", "Predict", "Influence", "Performance", "Model", "Models",
-  "Testing", "Relevant"];
+  "Testing", "Relevant", "Compare", "Contrast", "Compare and Contrast"];
     
     let DCItags = 
     ["Structure and Properties of Matter", "Chemical Reactions", "Nuclear Processes", "Forces and Motion", "Types of Interactions", "Definitions of Energy", "Conservation of Energy and Energy Transfer", "Properties of Matter", "Chemical", "Reactions", "Nuclear", "Reactions", "Forces", "Motion", "Interactions", "Conservation", "Forces", "Motion",
