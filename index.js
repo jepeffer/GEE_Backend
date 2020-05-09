@@ -56,7 +56,7 @@ app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
   {
     var archive = archiver('zip');
     archive
-    .append(fs.createReadStream(req.file), { name: req.file.originalname })
+    .append(fs.createReadStream(req.file + ''), { name: req.file.originalname })
     .finalize();
 
     archive.on('error', function(err) {
