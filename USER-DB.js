@@ -55,7 +55,7 @@ module.exports.getUsers = async (req) => {
   };
 
   module.exports.searchall = async (req) =>{
-    let query = "SELECT fileid, author, description, filelocation FROM OER WHERE tags like '%" + req.query.keywords + "%' OR subject like " + "'%" + req.query.keywords + " %'";
+    let query = "SELECT pdflocation, fileid, author, description, filelocation FROM OER WHERE tags like '%" + req.query.keywords + "%' OR subject like " + "'%" + req.query.keywords + " %'";
     let results = await pool.query(query);
     if (!results.length)
     {
