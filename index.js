@@ -153,8 +153,7 @@ app.get('/upload', cors(), (req, res, next) => {
 })
 
 app.get('/download',cors(), function(req, res){
-    const file = `/root/Resources/test.txt`;
-    res.download(file); // Set disposition and send it.
+    res.download(req.query.file); // Set disposition and send it.
   });
 
 /*app.get('/users', cors(), (req, res, next) => {
