@@ -132,8 +132,8 @@ app.get('/search', cors(), (req, res, next) => {
 })
 
 app.get('/searchall', cors(), (req, res, next) => {
-  console.log("Search");
-    db.search(req, res).then(result => {
+  console.log("Search all");
+    db.searchall(req, res).then(result => {
         res.send(result);
     }, reject => {
       console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
