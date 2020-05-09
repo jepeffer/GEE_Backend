@@ -18,7 +18,7 @@ var storage = multer.diskStorage({
       cb(null, DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')))
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname.substring(0, file.originalname.length - 3) + path.extname(file.originalname)) //Appending extension
+      cb(null, file.originalname) //Appending extension
     }
   })
   
@@ -54,6 +54,11 @@ app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
   var filetype = req.file.originalname.substring(req.file.originalname.length, req.file.originalname.length - 3)
   if (filetype !== "zip")
   {
+    var output = fs.createWriteStream(DIR + file.originalname + ".zip");
+    output.on('close', function() {
+      console.log(archive.pointer() + ' total bytes');
+      console.log('archiver has been finalized and the output file descriptor has closed.');
+    });
     var archive = archiver('zip');
     archive
     .append(fs.createReadStream(req.file + ''), { name: "THIS_ZIP_FILE"+ ".zip" })
