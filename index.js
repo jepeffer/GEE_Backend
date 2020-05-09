@@ -153,8 +153,9 @@ app.get('/upload', cors(), (req, res, next) => {
 })
 
 app.get('/download',cors(), function(req, res){
-  console.log(req.query.filelocation)
-    res.download(String(req.query.filelocation)); // Set disposition and send it.
+  filelocation = req.query.filelocation,toString();
+  console.log("Now downloading: " + filelocation);
+    res.download(filelocation); // Set disposition and send it.
   });
 
 /*app.get('/users', cors(), (req, res, next) => {
