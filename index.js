@@ -12,10 +12,10 @@ var archiver = require('archiver');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      if (!fs.existsSync(DIR + "/" + file.originalname)){
-        fs.mkdirSync(DIR + "/" + file.originalname);
+      if (!fs.existsSync(DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')))){
+        fs.mkdirSync(DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')));
     }
-      cb(null, DIR + "/" + file.originalname)
+      cb(null, DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')))
     },
     filename: function (req, file, cb) {
       cb(null, file.originalname.substring(0, file.originalname.length - 3) + path.extname(file.originalname)) //Appending extension
@@ -56,7 +56,7 @@ app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
   {
     var archive = archiver('zip');
     archive
-    .append(fs.createReadStream(file1), { name: req.file.originalname })
+    .append(fs.createReadStream(req.file), { name: req.file.originalname })
     .finalize();
 
     archive.on('error', function(err) {
