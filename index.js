@@ -54,9 +54,9 @@ app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
   var filetype = req.file.originalname.substring(req.file.originalname.length, req.file.originalname.length - 3)
   if (filetype !== "zip")
   {
-    console.log("File is not a zip: " + req.file.originalname);
+    //console.log("File is not a zip: " + req.file.originalname);
     var output = fs.createWriteStream(DIR + "/" + req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')) + ".zip");
-    console.log("This is output: " + DIR + "/" + req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')) + ".zip");
+   // console.log("This is output: " + DIR + "/" + req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')) + ".zip");
     output.on('close', function() {
       console.log(archive.pointer() + ' total bytes');
       console.log('archiver has been finalized and the output file descriptor has closed.');
@@ -121,6 +121,17 @@ app.get('/registerUser', cors(), (req, res, next)=> {
 });
 
 app.get('/search', cors(), (req, res, next) => {
+  console.log("Search");
+    db.search(req, res).then(result => {
+        res.send(result);
+    }, reject => {
+      console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+      res.send("oops");
+    });
+    
+})
+
+app.get('/searchall', cors(), (req, res, next) => {
   console.log("Search");
     db.search(req, res).then(result => {
         res.send(result);
