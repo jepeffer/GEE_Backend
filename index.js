@@ -55,8 +55,8 @@ app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
   if (filetype !== "zip")
   {
     console.log("File is not a zip: " + req.file.originalname);
-    var output = fs.createWriteStream(DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')) + ".zip");
-    console.log("This is output: " + DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')) + ".zip");
+    var output = fs.createWriteStream(DIR + "/" + req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')) + ".zip");
+    console.log("This is output: " + DIR + "/" + req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')) + ".zip");
     output.on('close', function() {
       console.log(archive.pointer() + ' total bytes');
       console.log('archiver has been finalized and the output file descriptor has closed.');
