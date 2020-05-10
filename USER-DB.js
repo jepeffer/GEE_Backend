@@ -1,5 +1,18 @@
 var pool = require("./pool")
 var fs = require('fs');
+var DIR = '/root/Resources';
+var multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    if (!fs.existsSync(DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')))){
+      fs.mkdirSync(DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')));
+  }
+    cb(null, DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')))
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname) //Appending extension
+  }
+})
 
 module.exports.getUsers = async (req) => {
     if (req.query.username && req.query.password) {
