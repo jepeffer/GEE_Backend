@@ -69,7 +69,7 @@ module.exports.getUsers = async (req) => {
 
   
   module.exports.getVotes = async (req) =>{
-    let user_query = "SELECT userid FROM Users WHERE username = " + req.query.username;
+    let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
     let user_results = await pool.query(user_query);
     user_id = user_results.userid;
     print(user_results);
