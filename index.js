@@ -214,7 +214,7 @@ app.get('/download',cors(), function(req, res){
   console.log("Now downloading: " + filelocation);
   filenamelist = filelocation.split('/');
   filename = filelocation[filelocation.length - 1];
-    res.download(filelocation, "test.zip"); // Set disposition and send it.
+    res.download(filelocation, 'test.zip'); // Set disposition and send it.
   });
 
 /*app.get('/users', cors(), (req, res, next) => {
