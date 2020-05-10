@@ -50,9 +50,20 @@ app.get('/api', function (req, res) {
       });
        
 app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
-  console.log("File recieved" + req.file.originalname);
+  console.log("File recieved " + req.file.originalname);
   db.uploadFile(req, res).then(result => {
-    res.send(result);
+    if (res.toString() == "Bad")
+    {
+      return res.send({
+        success: 1
+    })
+    }
+    else{
+    return res.send({
+      success: 0
+  })
+    }
+    
 }, reject => {
   console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
   res.send("oops");

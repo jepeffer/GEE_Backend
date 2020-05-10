@@ -59,7 +59,11 @@ module.exports.getUsers = async (req) => {
       .append(fs.createReadStream(req.file + ''), { name: "THIS_ZIP_FILE"+ ".zip" })
       .finalize();
   
-      
+      archive.on('error', function(err) {
+        return res.send({
+          success: 3
+      });
+      });
     }
     else{
       console.log("Not a zip: " + req.query.originalname);
