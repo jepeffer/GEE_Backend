@@ -164,7 +164,7 @@ app.get('/getvotes', cors(), (req, res, next) => {
     
 })
 
-app.post('/submitfeedback', cors(), (req, res, next) => {
+app.get('/submitfeedback', cors(), (req, res, next) => {
   console.log("Submit Feedback");
     db.submitFeedbackByFileID(req, res).then(result => {
         res.send(result);
@@ -175,7 +175,7 @@ app.post('/submitfeedback', cors(), (req, res, next) => {
     
 })
 
-app.post('/submitvote', cors(), (req, res, next) => {
+app.get('/submitvote', cors(), (req, res, next) => {
   console.log("Submit Vote");
     db.submitVote(req, res).then(result => {
         res.send(result);
