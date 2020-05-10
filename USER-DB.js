@@ -91,8 +91,7 @@ module.exports.getUsers = async (req) => {
     vote_value = parseInt(vote_value_string);
     let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
     let user_results = await pool.query(user_query);
-    user_id = user_results[0].userid
-    print(user_results);
+    user_id = user_results[0].userid;
     let query = "INSERT INTO Vote (userid, fileid, Vote) VALUES ({0}, {1}, {2})".format(user_id, file_id, vote_value);
     let results = await pool.query(query);
     original_vote_value_string = String(req.query.originalVoteValue);
@@ -116,7 +115,6 @@ module.exports.getUsers = async (req) => {
     let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
     let user_results = await pool.query(user_query);
     user_id = user_results[0].userid
-    print(user_results);
     let query = "INSERT INTO Feedback (fileid, userid, feedback) VALUES ({0}, {1}, {2})".format(file_id, user_id, req.query.feedback);
     let results = await pool.query(query);
     if (!results.length)
