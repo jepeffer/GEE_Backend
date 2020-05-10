@@ -1,4 +1,5 @@
 var pool = require("./pool")
+var fs = require('fs');
 
 module.exports.getUsers = async (req) => {
     if (req.query.username && req.query.password) {
