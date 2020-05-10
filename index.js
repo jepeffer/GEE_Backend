@@ -52,8 +52,7 @@ app.get('/api', function (req, res) {
 app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
   console.log("File recieved" + req.file.originalname);
   var filetype = req.file.originalname.substring(req.file.originalname.length, req.file.originalname.length - 3)
-  if (filetype !== "zip")
-  {
+  
     //console.log("File is not a zip: " + req.file.originalname);
     var output = fs.createWriteStream(DIR + "/" + req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')) + ".zip");
    // console.log("This is output: " + DIR + "/" + req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')) + ".zip");
@@ -71,10 +70,8 @@ app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
       return "Error";
    
     });
-  }
-  else{
-    console.log("Not a zip: " + req.query.originalname);
-  }
+  
+  
 
 if (!req.file) {
     console.log("No file received");
@@ -83,7 +80,7 @@ if (!req.file) {
     });
 
     } else {
-    console.log('file received successfully' + req.file.originalname);
+    console.log('file received successfully ' + req.file.originalname);
     return res.send({
         success: 0
     })
