@@ -71,11 +71,7 @@ module.exports.getUsers = async (req) => {
   module.exports.getVotes = async (req) =>{
     let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
     let user_results = await pool.query(user_query);
-    user_id = user_results.userid;
-  
-    console.log("This is user id:" + user_id);
-    console.log("This is user id raeraw:" + user_results[0].userid);
-    console.log("This is user id radsadadsadderaw:" + user_results["RowDataPacket"].userid);
+    user_id = user_results[0].userid
     let query = "SELECT * FROM Vote where userid = " + user_id;
     let results = await pool.query(query);
     if (!results.length)
@@ -104,9 +100,9 @@ module.exports.getUsers = async (req) => {
   module.exports.submitFeedbackByFileID = async (req) =>{
     file_id_string = String(req.query.fileid);
     file_id = parseInt(file_id_string);
-    let user_query = "SELECT userid FROM Users WHERE username = " + req.query.username;
+    let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
     let user_results = await pool.query(user_query);
-    user_id = user_results.userid;
+    user_id = user_results[0].userid
     print(user_results);
     let query = "INSERT INTO Feedback (fileid, userid, feedback) VALUES ({0}, {1}, {2})".format(file_id, user_id, req.query.feedback);
     let results = await pool.query(query);
