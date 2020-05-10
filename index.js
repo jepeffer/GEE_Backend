@@ -68,9 +68,8 @@ app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
     .finalize();
 
     archive.on('error', function(err) {
-      return res.send({
-        success: 3
-    });
+      return "Error";
+   
     });
   }
   else{
