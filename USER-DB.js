@@ -85,7 +85,15 @@ module.exports.getUsers = async (req) => {
   }
 
   module.exports.submitVote = async (req) =>{
-    let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%' OR subject like " + "'%" + req.query.keywords + " %'";
+    file_id_string = String(req.query.fileid);
+    file_id = parseInt(file_id_string);
+    vote_value_string = String(req.query.voteValue);
+    vote_value = parseInt(vote_value_string);
+    let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
+    let user_results = await pool.query(user_query);
+    user_id = user_results[0].userid
+    print(user_results);
+    let query = "INSERT INTO Vote (userid, fileid, Vote) VALUES ({0}, {1}, {2})".format(user_id, file_id, vote_value);
     let results = await pool.query(query);
     if (!results.length)
     {
