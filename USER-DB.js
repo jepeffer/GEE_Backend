@@ -1,6 +1,7 @@
 var pool = require("./pool")
 var fs = require('fs');
 var DIR = '/root/Resources';
+var archiver = require('archiver');
 var multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
