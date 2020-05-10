@@ -72,7 +72,7 @@ module.exports.getUsers = async (req) => {
     let results = await pool.query(query);
     if (!results.length)
     {
-      return 0;
+      return 200;
     }
     else
     {
