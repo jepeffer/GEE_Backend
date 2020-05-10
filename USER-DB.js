@@ -261,6 +261,8 @@ module.exports.getUsers = async (req) => {
   };
 
   module.exports.upload = async (req) => {
+    var filename = String(req.query.filename);
+    var filetype = filename.substring(filename.length - 3, filename.length);
     var description = req.query.description;
     var license = req.query.license;
     var subject = req.query.subject;
@@ -271,8 +273,14 @@ module.exports.getUsers = async (req) => {
     var labs = req.query.labs;
     var exams = req.query.exams;
     var worksheets = req.query.worksheets;
-    var meda_format = "";
-
+    var media_format = "";
+    var username = req.query.username;
+    let find_user_id_query = "SELECT userid FROM Users WHERE username = '" + username + "'";
+    let result = await pool.query(find_user_id_query);
+    if (result.length) // User is already taken!
+    {
+        userid = result[0].userid;
+    }
     if (video != "")
     {
       media_format += video + ",";
@@ -289,12 +297,23 @@ module.exports.getUsers = async (req) => {
     {
       media_format += worksheets + ",";
     }
-    insert_statement = "INSERT INTO OER (userid, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes) VALUES (0,{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10});".format(author, fileTitle,description,name,subject,media_format, license,date_added,grade,0,tags,"none")
-    if (req.query.description) {
-      r = r + "Content Description:" + "Content Description";
-      console.log("contentDescription found!")
-      return r; // All was added correctly.
-    } 
+    var pdflocation = "";
+    if (filetype == "pdf")
+    {
+      pdflocation = "/root/Resources/" + fileTitle + "/" + filename;
+    }
+    var filelocation = "/root/Resources/" + fileTitle;
+    let ziplocation = filelocation + ".zip";
+    var dateobj = new Date();
+   // var date_now = dateobj.toString();
+    var date_now = "NOW";
+    insert_statement = "INSERT INTO OER (userid, pdflocation, ziplocation, author, filelocation, description, name, subject, mediaformat, license, dateadded, grade, upvotes, tags, remix) VALUES" + 
+    "(" + userid + ",\"" + pdflocation + "\"" + ",\"" + ziplocation + "\"" + ",\"" + username + "\"" +",\"" + filelocation + ",\"" + description + "\"" + ",\"" + fileTitle + "\"" + ",\"" + subject + "\"" + ",\"" + media_format + "\"" + ",\"" + license + "\"" + ",\"" + date_now + "\"" + ",\"" + grade + "\"," + 0 + ",\"" + tags + "\",\"none\");"
+    console.log("This is the insert statement" + insert_statement)
+   if (result)
+   {
+     return 'GOOD';
+   }
     
     else {
       console.error(new Date().toISOString(), req.path, `Search result was incomplete ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
