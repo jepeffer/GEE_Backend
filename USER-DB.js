@@ -82,7 +82,7 @@ module.exports.getUsers = async (req) => {
     }
   }
 
-  }
+  
 
 
   module.exports.search = async (req) => {
