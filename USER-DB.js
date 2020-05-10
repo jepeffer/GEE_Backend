@@ -1,8 +1,15 @@
-var pool = require("./pool")
+
+var mysql = require('mysql');
+const cors = require('cors');
+const db = require('./USER-DB');
+var bodyParser = require('body-parser');
+var express = require('express');
 var fs = require('fs');
+var multer = require('multer');
+var path = require('path')
 var DIR = '/root/Resources';
 var archiver = require('archiver');
-var multer = require('multer');
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     if (!fs.existsSync(DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')))){
@@ -53,9 +60,7 @@ module.exports.getUsers = async (req) => {
       .finalize();
   
       archive.on('error', function(err) {
-        return res.send({
-          success: 3
-      });
+        return "Bad";
       });
     }
     else{
@@ -64,15 +69,11 @@ module.exports.getUsers = async (req) => {
   
   if (!req.file) {
       console.log("No file received");
-      return res.send({
-          success: 2
-      });
+      return "Bad";
   
       } else {
       console.log('file received successfully' + req.file.originalname);
-      return res.send({
-          success: 0
-      })
+      return "Good";
       }
   };
   module.exports.registerUser = async (req) => {
