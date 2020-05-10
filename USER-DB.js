@@ -55,7 +55,7 @@ module.exports.getUsers = async (req) => {
   };
 
   module.exports.searchall = async (req) =>{
-    let query = "SELECT upvotes, pdflocation, fileid, author, description, filelocation FROM OER WHERE tags like '%" + req.query.keywords + "%' OR subject like " + "'%" + req.query.keywords + " %'";
+    let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%' OR subject like " + "'%" + req.query.keywords + " %'";
     let results = await pool.query(query);
     if (!results.length)
     {
@@ -66,6 +66,20 @@ module.exports.getUsers = async (req) => {
       return results;
     }
   }
+
+  module.exports.getFeedbackByFileID = async (req) =>{
+    let query = "SELECT * FROM Feedback WHERE fileid = " + req.query.fileid;
+    let results = await pool.query(query);
+    if (!results.length)
+    {
+      return 0;
+    }
+    else
+    {
+      return results;
+    }
+  }
+
 
   module.exports.search = async (req) => {
     let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%'";
