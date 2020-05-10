@@ -51,7 +51,6 @@ app.get('/api', function (req, res) {
        
 app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
   console.log("File recieved" + req.file.originalname);
-  
   var filetype = req.file.originalname.substring(req.file.originalname.length, req.file.originalname.length - 3)
   if (filetype !== "zip")
   {
