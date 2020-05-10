@@ -67,12 +67,60 @@ module.exports.getUsers = async (req) => {
     }
   }
 
+  
+  module.exports.getVotes = async (req) =>{
+    let user_query = "SELECT userid FROM Users WHERE username = " + req.query.username;
+    let user_results = await pool.query(user_query);
+    user_id = user_results.userid;
+    print(user_results);
+    let query = "SELECT * FROM Votes where userid = " + user_id;
+    let results = await pool.query(query);
+    if (!results.length)
+    {
+      return "Bad";
+    }
+    else
+    {
+      return results;
+    }
+  }
+
+  module.exports.submitVote = async (req) =>{
+    let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%' OR subject like " + "'%" + req.query.keywords + " %'";
+    let results = await pool.query(query);
+    if (!results.length)
+    {
+      return "Bad";
+    }
+    else
+    {
+      return results;
+    }
+  }
+
+  module.exports.submitFeedbackByFileID = async (req) =>{
+    file_id_string = String(req.query.fileid);
+    file_id = parseInt(file_id_string);
+    let user_query = "SELECT userid FROM Users WHERE username = " + req.query.username;
+    let user_results = await pool.query(user_query);
+    user_id = user_results.userid;
+    print(user_results);
+    let query = "INSERT INTO Feedback (fileid, userid, feedback) VALUES ({0}, {1}, {2})".format(file_id, user_id, req.query.feedback);
+    let results = await pool.query(query);
+    if (!results.length)
+    {
+      return "Bad";
+    }
+    else
+    {
+      return results;
+    }
+  }
+
   module.exports.getFeedbackByFileID = async (req) =>{
-    console.log("I got to feedback");
     file_id_string = String(req.query.fileid);
     file_id = parseInt(file_id_string);
     let query = "SELECT * FROM Feedback WHERE fileid = " + file_id;
-    console.error(query);
     let results = await pool.query(query);
     if (!results.length)
     {

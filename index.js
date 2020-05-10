@@ -153,6 +153,39 @@ app.get('/getfeedback', cors(), (req, res, next) => {
     
 })
 
+app.get('/getvotes', cors(), (req, res, next) => {
+  console.log("Getting votes");
+    db.getVotes(req, res).then(result => {
+        res.send(result);
+    }, reject => {
+      console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+      res.send("oops");
+    });
+    
+})
+
+app.post('/submitfeedback', cors(), (req, res, next) => {
+  console.log("Submit Feedback");
+    db.submitFeedbackByFileID(req, res).then(result => {
+        res.send(result);
+    }, reject => {
+      console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+      res.send("oops");
+    });
+    
+})
+
+app.post('/submitvote', cors(), (req, res, next) => {
+  console.log("Submit Vote");
+    db.submitVote(req, res).then(result => {
+        res.send(result);
+    }, reject => {
+      console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+      res.send("oops");
+    });
+    
+})
+
 app.get('/upload', cors(), (req, res, next) => {
     db.upload(req, res).then(result => {
         res.send(result);
