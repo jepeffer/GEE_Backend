@@ -5,7 +5,7 @@ module.exports.getUsers = async (req) => {
       let values = [req.query.username, req.query.password];
       // If set then limit to only a ticket linked to locations the user has access to
 
-      let query = "SELECT userid, username FROM Users WHERE username = '" + req.query.username + "'";
+      let query = "SELECT userid, username FROM Users WHERE username = '" + req.query.username + "' AND password = '" + req.query.password +"'";;
       
       let result = await pool.query(query, values);
       if (result.length) 
