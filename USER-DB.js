@@ -94,13 +94,14 @@ module.exports.getUsers = async (req) => {
     user_id = user_results[0].userid;
     let selectQuery = "SELECT * FROM Vote WHERE userid = " + user_id + " AND fileid = " + file_id + ";";
     let selectResults = await pool.query(selectQuery);
+    let query = "";
     if (selectResults.length)
     {
-      let query = "UPDATE Vote SET Vote = " + vote_value + " WHERE fileid = " + file_id + " AND userid = " + user_id + ";";
+      query = "UPDATE Vote SET Vote = " + vote_value + " WHERE fileid = " + file_id + " AND userid = " + user_id + ";";
     }
     else
     {
-      let query = "INSERT INTO Vote (userid, fileid, Vote) VALUES (" + user_id + "," + file_id + "," + vote_value +");"
+      query = "INSERT INTO Vote (userid, fileid, Vote) VALUES (" + user_id + "," + file_id + "," + vote_value +");"
     }
 
     let results = await pool.query(query);
