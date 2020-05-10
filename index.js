@@ -50,23 +50,46 @@ app.get('/api', function (req, res) {
       });
        
 app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
-  console.log("File recieved " + req.file.originalname);
-  db.uploadFile(req, res).then(result => {
-
-    if (result.toString() == "Bad")    {
-      console.log("I was bad");
-      return 1;
-    }
-    else{
-      console.log("I was good");
-    return 0;
+  console.log("File recieved" + req.file.originalname);
   
+  var filetype = req.file.originalname.substring(req.file.originalname.length, req.file.originalname.length - 3)
+  if (filetype !== "zip")
+  {
+    //console.log("File is not a zip: " + req.file.originalname);
+    var output = fs.createWriteStream(DIR + "/" + req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')) + ".zip");
+   // console.log("This is output: " + DIR + "/" + req.file.originalname.substring(0, req.file.originalname.lastIndexOf('.')) + ".zip");
+    output.on('close', function() {
+      console.log(archive.pointer() + ' total bytes');
+      console.log('archiver has been finalized and the output file descriptor has closed.');
+    });
+    var archive = archiver('zip');
+    archive.pipe(output);
+    archive
+    .append(fs.createReadStream(req.file + ''), { name: "THIS_ZIP_FILE"+ ".zip" })
+    .finalize();
+
+    archive.on('error', function(err) {
+      return res.send({
+        success: 3
+    });
+    });
+  }
+  else{
+    console.log("Not a zip: " + req.query.originalname);
+  }
+
+if (!req.file) {
+    console.log("No file received");
+    return res.send({
+        success: 2
+    });
+
+    } else {
+    console.log('file received successfully' + req.file.originalname);
+    return res.send({
+        success: 0
+    })
     }
-    
-}, reject => {
-  console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
-  res.send("oops");
-});
 });
 var con = mysql.createConnection({
     host: "localhost",
@@ -189,7 +212,9 @@ app.get('/download',cors(), function(req, res){
   console.log("Downloading called");
   filelocation = req.query.filelocation.toString();
   console.log("Now downloading: " + filelocation);
-    res.download(filelocation); // Set disposition and send it.
+  filenamelist = filelocation.split('/');
+  filename = filelocation[filelocation.length - 1];
+    res.download(filelocation, 'test.zip'); // Set disposition and send it.
   });
 
 /*app.get('/users', cors(), (req, res, next) => {
