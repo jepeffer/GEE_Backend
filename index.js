@@ -212,9 +212,9 @@ app.get('/download',cors(), function(req, res){
   console.log("Downloading called");
   filelocation = req.query.filelocation.toString();
   console.log("Now downloading: " + filelocation);
-  filenamelist = filelocation.split("/");
+  filenamelist = filelocation.split('/');
   filename = filelocation[filelocation.length - 1];
-    res.download(filename + ".zip", filelocation); // Set disposition and send it.
+    res.download(filelocation, filename + ".zip"); // Set disposition and send it.
   });
 
 /*app.get('/users', cors(), (req, res, next) => {
