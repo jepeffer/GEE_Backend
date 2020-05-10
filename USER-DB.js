@@ -92,13 +92,22 @@ module.exports.getUsers = async (req) => {
     let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
     let user_results = await pool.query(user_query);
     user_id = user_results[0].userid;
+    let selectQuery = "SELECT * FROM Vote WHERE userid = " + user_id + " AND fileid = " + file_id + ";";
+    let selectResults = await pool.query(selectQuery);
+    if (selectResults.length)
+    {
+      let query = "UPDATE Vote SET Vote = " + vote_value + " WHERE fileid = " + file_id + " AND userid = " + user_id + ";";
+    }
+    else
+    {
+      let query = "INSERT INTO Vote (userid, fileid, Vote) VALUES (" + user_id + "," + file_id + "," + vote_value +");"
+    }
 
-    let query = "INSERT INTO Vote (userid, fileid, Vote) VALUES (" + user_id + "," + file_id + "," + vote_value +");"
     let results = await pool.query(query);
     original_vote_value_string = String(req.query.originalVoteValue);
     original_vote_value = parseInt(original_vote_value_string);
     let newVoteValue = original_vote_value + vote_value;
-    let updatevotequery = "UPDATE OER SET upvotes = " + newVoteValue + " WHERE fileid = " + file_id +";";
+    let updatevotequery = "UPDATE OER SET upvote = " + newVoteValue + " WHERE fileid = " +file_id +";";
     let update_result = await pool.query(updatevotequery);
     if (!results.length)
     {
