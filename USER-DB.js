@@ -41,7 +41,7 @@ module.exports.getUsers = async (req) => {
       return Promise.reject();
     }
   };
-  module.exports.uploadFile = async (req) =>
+  module.exports.uploadFile = async (req, res) =>
   {
     var filetype = req.file.originalname.substring(req.file.originalname.length, req.file.originalname.length - 3)
     if (filetype !== "zip")
@@ -60,7 +60,9 @@ module.exports.getUsers = async (req) => {
       .finalize();
   
       archive.on('error', function(err) {
-        return "Bad";
+        return res.send({
+          success: 3
+      });
       });
     }
     else{
@@ -69,11 +71,15 @@ module.exports.getUsers = async (req) => {
   
   if (!req.file) {
       console.log("No file received");
-      return "Bad";
+      return res.send({
+          success: 2
+      });
   
       } else {
       console.log('file received successfully' + req.file.originalname);
-      return "Good";
+      return res.send({
+          success: 0
+      })
       }
   };
   module.exports.registerUser = async (req) => {
