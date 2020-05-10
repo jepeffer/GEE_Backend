@@ -54,15 +54,131 @@ module.exports.getUsers = async (req) => {
     }
   };
 
+  module.exports.searchall = async (req) =>{
+    let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%' OR subject like " + "'%" + req.query.keywords + " %'";
+    let results = await pool.query(query);
+    if (!results.length)
+    {
+      return "Bad";
+    }
+    else
+    {
+      return results;
+    }
+  }
+
   
+  module.exports.getVotes = async (req) =>{
+    let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
+    let user_results = await pool.query(user_query);
+    user_id = user_results[0].userid
+    let query = "SELECT * FROM Vote where userid = " + user_id;
+    let results = await pool.query(query);
+    if (!results.length)
+    {
+      return "Bad";
+    }
+    else
+    {
+      return results;
+    }
+  }
+
+  module.exports.submitVote = async (req) =>{
+    file_id_string = String(req.query.fileid);
+    file_id = parseInt(file_id_string);
+    vote_value_string = String(req.query.voteValue);
+    vote_value = parseInt(vote_value_string);
+    let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
+    let user_results = await pool.query(user_query);
+    user_id = user_results[0].userid;
+    let query = "INSERT INTO Vote (userid, fileid, Vote) VALUES ({0}, {1}, {2});".format(user_id, file_id, vote_value);
+    let results = await pool.query(query);
+    original_vote_value_string = String(req.query.originalVoteValue);
+    original_vote_value = parseInt(original_vote_value_string);
+    let newVoteValue = original_vote_value + vote_value;
+    let updatevotequery = "UPDATE OER SET upvote = {0} WHERE fileid = {1};".format(newVoteValue, file_id);
+    let update_result = await pool.query(updatevotequery);
+    if (!results.length)
+    {
+      return "Bad";
+    }
+    else
+    {
+      return results;
+    }
+  }
+
+  module.exports.submitFeedbackByFileID = async (req) =>{
+    file_id_string = String(req.query.fileid);
+    file_id = parseInt(file_id_string);
+    let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
+    let user_results = await pool.query(user_query);
+    user_id = user_results[0].userid
+    let query = "INSERT INTO Feedback (fileid, userid, feedback) VALUES ({0}, {1}, {2});".format(file_id, user_id, req.query.feedback);
+    let results = await pool.query(query);
+    if (!results.length)
+    {
+      return "Bad";
+    }
+    else
+    {
+      return results;
+    }
+  }
+
+  module.exports.getFeedbackByFileID = async (req) =>{
+    file_id_string = String(req.query.fileid);
+    file_id = parseInt(file_id_string);
+    let query = "SELECT * FROM Feedback WHERE fileid = " + file_id;
+    let results = await pool.query(query);
+    if (!results.length)
+    {
+      return "Bad";
+    }
+    else
+    {
+      return results;
+    }
+  }
+
+  
+
 
   module.exports.search = async (req) => {
     let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%'";
     let results = await pool.query(query);
-    let CCCtags = ["Patterns","Cause and Effect", "Scale, Proportion, and Quantity", "Systems and System Models", "Energy and Matter", "Structure and Function", "Stability and Change", "Interdependence of Science, Engineering, and Technology", "Influence of Engineering, Technology, and Science on Society and the Natural World"];
-    let DCItags = ["Structure and Properties of Matter", "Chemical Reactions", "Nuclear Processes", "Forces and Motion", "Types of Interactions", "Definitions of Energy", "Conservation of Energy and Energy Transfer", "Relationship Between Energy and Forces", "Energy in Chemical Processes and Everyday Life", "Wave Properties", "Electromagnetic Radiation", "Information Technologies and Instrumentation", "Structure and Function", "Growth and Development of Organisms", "Growth and Development of Organisms", "Information Processing", "Interdependent Relationships in Ecosystems", "Cycles of Matter and Energy Transfer in Ecosystems", "Ecosystems Dynamics, Functioning and Resilience", "Social Interactions and Group Behavior", "Inheritance of Traits", "Variation of Traits", "Evidence of Common Ancestry and Diversity", "Natural Selection", "Natural Selection", "Adaptation", "Biodiversity and Humans", "The Universe and its Stars", "Earth and the Solar System", "The History of Planet Earth", "Earth Materials and Systems", "Plate Tectonics and Large-Scale Systems", "The Role of Water in Earth’s Surface Processes", "Weather and Climate", "Biogeology", "Natural Resources", "Natural Hazards", "Human Impacts on Earth Systems", "Global Climate Change", "Defining and Delimiting and Engineering Problem", "Developing Possible Solutions", "Optimizing the Design Solution"]
+    let CCCtags = 
+    ["Patterns","Cause and Effect", "Scale, Proportion, and Quantity", "Systems and System Models", "Energy and Matter", 
+    "Cause", "Effect", "Scale", "Proportion", "Quantity", "System", "System Models", "Function",
+     "Structure", "Stability", "Change", "Interdependence", "Stability", "Influence", 
+     "Interdependence", "Lab", "Energy", "Matter", "Energy and Matter", "Structure and Function", 
+     "Stability and Change", "Interdependence of Science, Engineering, and Technology",  
+     "Influence of Engineering, Technology, and Science on Society and the Natural World", "Society", "Natural World", "Influence", "Real life", "Labs", 
+     "Phenomena", "Pattern", "Organization", "Classification", "Relationship", "Relationships", "Causes", "Events", "Time scale", "Energy Scale", "Size Scale",
+    "Proportional", "Tracking", "Behavior", "Stability", "Rate of change", "Change", "Limitations", "Predict", "Influence", "Performance", "Model", "Models",
+  "Testing", "Relevant", "Compare", "Contrast", "Compare and Contrast"];
+    
+    let DCItags = 
+    ["Structure and Properties of Matter", "Chemical Reactions", "Nuclear Processes", "Forces and Motion", "Types of Interactions", "Definitions of Energy", "Conservation of Energy and Energy Transfer", "Properties of Matter", "Chemical", "Reactions", "Nuclear", "Reactions", "Forces", "Motion", "Interactions", "Conservation", "Forces", "Motion",
+    "Relationship Between Energy and Forces", "Energy in Chemical Processes and Everyday Life", "Chemical Processes", "Energy", "Electromagnetic", "Radiation", "Information technology", "Instrumentation", "Function", "Technology", "Instrumentation", "Growth", "Development", "Organisms", "Information", "Processing", "Cycles", "Cycles of Matter", 
+    "Traits", "Evidence", "Common Ancestry", "Diversity", "Climate change", "Hazard", "Adaptation", "Biodiversity", "Humans", "Universe", "Stars", "Solar system", "Social Interactions", "Weather", "Climate", "Biogeolgy", "Natural", "Resources", "Engineering", "Engineering Problem", "Solutions", "Design", "Design solutions", "Human Impact", "Impact",
+    "Water", "Earth", "Materials", "Plate Tectonics", "Information", "Large-Scale",
+    "Wave Properties", "Electromagnetic Radiation", "Information Technologies and Instrumentation", 
+    "Structure and Function", "Growth and Development of Organisms", "Growth and Development of Organisms", "Information Processing", 
+    "Interdependent Relationships in Ecosystems", "Cycles of Matter and Energy Transfer in Ecosystems", 
+    "Ecosystems Dynamics, Functioning and Resilience", "Social Interactions and Group Behavior", 
+    "Inheritance of Traits", "Variation of Traits", "Evidence of Common Ancestry and Diversity", "Natural Selection", 
+    "Natural Selection", "Adaptation", "Biodiversity and Humans", "The Universe and its Stars", "Earth and the Solar System", 
+    "The History of Planet Earth", "Earth Materials and Systems", "Plate Tectonics and Large-Scale Systems", 
+    "The Role of Water in Earth’s Surface Processes", "Weather and Climate", "Biogeology", "Natural Resources", 
+    "Natural Hazards", "Human Impacts on Earth Systems", "Global Climate Change", 
+    "Defining and Delimiting and Engineering Problem", "Developing Possible Solutions", "Optimizing the Design Solution"]
     let PItags = ["Quiz", "Assessment", "Test", "Exam"];
-    let Practicetags = ["Asking Questions and Defining Problems", "Developing and Using Models", "Planning and Carrying Out Investigations", "Analyzing and Interpreting Data", "Using Mathematics and Computational Thinking", "Constructing Explanations and Designing Solutions", "Engaging in Argument from Evidence", "Obtaining, Evaluating, and Communicating Information"];
+    let Practicetags = 
+    ["Asking Questions and Defining Problems", "Developing and Using Models", "Planning and Carrying Out Investigations", "Analyzing and Interpreting Data", "Using Mathematics and Computational Thinking", 
+    "Constructing Explanations and Designing Solutions", "Engaging in Argument from Evidence", "Obtaining, Evaluating, and Communicating Information", "Questions", "Problems", "Model", "Models", "Investigation", "Investigations", 
+    "Analyzing", "Interpreting", "Data", "Computational", "Thinking", "Explanations", "Constructing", "Solutions", "Designing", "Evidence", "Argument", "Communication", "Communicating", "Information", "Evaluating", "Planning", "Asking questions"];
 
     let CCCmatches = [];
     let DCImatches = [];
@@ -72,6 +188,8 @@ module.exports.getUsers = async (req) => {
     for (let i = 0; i < results.length; i++){
       for(let y = 0; y < CCCtags.length; y++){
         let tags = results[i].tags;
+        let description = results[i].description;
+        console.log(description);
         if(tags.includes(CCCtags[y])){
           CCCmatches.push(results[i]);
         }
@@ -87,22 +205,58 @@ module.exports.getUsers = async (req) => {
       }
     }
 
+    let matches = [CCCmatches, DCImatches, PImatches, Practicematches];
+
     // At this point, we have all of the results that match one of the 4 categories of standards
     // Now we want to sort through
     // Score: other params are 3, general tags are 1
 
     let final = [];
-    let bestCCC;
-    let bestCCCscore = 0;
-    for(var x = 0; x < CCCmatches.length; x++){
-      final.push(CCCmatches[x]);
-      console.log(CCCmatches[x].description);
+    let reasons = "";
+    for(var z = 0; z < 4; z++){
+      let bestEntry;
+      let bestEntryScore = 0;
+      let bestReasons = "";
+      for(var x = 0; x < matches[z].length; x++){
+        let entry = matches[z][x];
+        let entryScore = 0;
+        let entryReasons = "";
+        if(matches[z][x].grade == req.graveLevel){
+          entryScore = entryScore + 3;
+          entryReasons = entryReasons + "1";
+        }else{
+          entryReasons = entryReasons + "0";
+        }
+        if(matches[z][x].subject == req.subject){
+          entryScore = entryScore + 3;
+          entryReasons = entryReasons + "1";
+        }else{
+          entryReasons = entryReasons + "0";
+        }
+        if(matches[z][x].contentType == req.contentType){
+          entryScore = entryScore + 3;
+          entryReasons = entryReasons + "1";
+        }else{
+          entryReasons = entryReasons+ "0";
+        }
+
+        if(entryScore >= bestEntryScore){
+          bestEntry = entry;
+          bestEntryScore = entryScore;
+          bestReasons = entryReasons;
+        }
+      }
+      if(bestReasons != ""){
+        reasons = reasons + bestReasons;
+      }else{
+        reasons = reasons + "000";
+      }
+      final.push(bestEntry);
     }
 
-    final.push(bestCCC);
-
-
-
+    console.log(reasons);
+    final.push(reasons);
+    
     return final;
   };
 
