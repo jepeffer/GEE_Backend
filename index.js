@@ -142,6 +142,17 @@ app.get('/searchall', cors(), (req, res, next) => {
     
 })
 
+app.get('/getfile', cors(), (req, res, next) => {
+  console.log("Get File");
+    db.getFile(req, res).then(result => {
+        res.send(result);
+    }, reject => {
+      console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+      res.send("oops");
+    });
+    
+})
+
 app.get('/getfeedback', cors(), (req, res, next) => {
   console.log("Feedback");
     db.getFeedbackByFileID(req, res).then(result => {

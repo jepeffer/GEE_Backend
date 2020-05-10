@@ -84,6 +84,19 @@ module.exports.getUsers = async (req) => {
     }
   }
 
+  module.exports.getFile = async (req) =>{
+    let query = "SELECT * FROM OER WHERE fileid = " + req.query.fileid + ";";
+    let results = await pool.query(query);
+    if (!results.length)
+    {
+      return "Bad";
+    }
+    else
+    {
+      return results;
+    }
+  }
+
   module.exports.submitVote = async (req) =>{
     file_id_string = String(req.query.fileid);
     file_id = parseInt(file_id_string);
