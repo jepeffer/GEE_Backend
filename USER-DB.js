@@ -72,7 +72,10 @@ module.exports.getUsers = async (req) => {
     let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
     let user_results = await pool.query(user_query);
     user_id = user_results.userid;
-    console.log(user_results);
+  
+    console.log("This is user id:" + user_id);
+    console.log("This is user id raeraw:" + user_results[0].userid);
+    console.log("This is user id radsadadsadderaw:" + user_results["RowDataPacket"].userid);
     let query = "SELECT * FROM Vote where userid = " + user_id;
     let results = await pool.query(query);
     if (!results.length)
