@@ -9,7 +9,6 @@ var multer = require('multer');
 var path = require('path')
 var DIR = '/root/Resources';
 var archiver = require('archiver');
-
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     if (!fs.existsSync(DIR + "/" + file.originalname.substring(0, file.originalname.lastIndexOf('.')))){
@@ -41,7 +40,7 @@ module.exports.getUsers = async (req) => {
       return Promise.reject();
     }
   };
-  module.exports.uploadFile = async (req, res) =>
+  module.exports.uploadFile = async (req) =>
   {
     var filetype = req.file.originalname.substring(req.file.originalname.length, req.file.originalname.length - 3)
     if (filetype !== "zip")
@@ -60,9 +59,7 @@ module.exports.getUsers = async (req) => {
       .finalize();
   
       archive.on('error', function(err) {
-        return res.send({
-          success: 3
-      });
+        return "Bad";
       });
     }
     else{
@@ -71,15 +68,11 @@ module.exports.getUsers = async (req) => {
   
   if (!req.file) {
       console.log("No file received");
-      return res.send({
-          success: 2
-      });
+      return "Bad";
   
       } else {
       console.log('file received successfully' + req.file.originalname);
-      return res.send({
-          success: 0
-      })
+        return "Good";
       }
   };
   module.exports.registerUser = async (req) => {

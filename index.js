@@ -53,17 +53,14 @@ app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
   console.log("File recieved " + req.file.originalname);
   db.uploadFile(req, res).then(result => {
 
-    if (res.toString() == "Bad")    {
+    if (result.toString() == "Bad")    {
       console.log("I was bad");
-      return res.send({
-        success: 1
-    })
+      return 1;
     }
     else{
       console.log("I was good");
-    return res.send({
-      success: 0
-  })
+    return 0;
+  
     }
     
 }, reject => {
