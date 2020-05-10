@@ -69,9 +69,7 @@ module.exports.getUsers = async (req) => {
 
   module.exports.getFeedbackByFileID = async (req) =>{
     console.log("I got to feedback");
-      var fileid = parseInt(req.query.fileid);
-      console.log(fileid);
-    let query = "SELECT * FROM Feedback WHERE fileid = " + fileid;
+    let query = "SELECT * FROM Feedback WHERE fileid = " + 155;
     console.error(query);
     let results = await pool.query(query);
     if (!results.length)
