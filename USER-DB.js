@@ -98,7 +98,7 @@ module.exports.getUsers = async (req) => {
     original_vote_value_string = String(req.query.originalVoteValue);
     original_vote_value = parseInt(original_vote_value_string);
     let newVoteValue = original_vote_value + vote_value;
-    let updatevotequery = "UPDATE OER SET upvote = "+ newVoteValue + " WHERE fileid = " +file_id +";";
+    let updatevotequery = "UPDATE OER SET upvotes = " + newVoteValue + " WHERE fileid = " + file_id +";";
     let update_result = await pool.query(updatevotequery);
     if (!results.length)
     {
