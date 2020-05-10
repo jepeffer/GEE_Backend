@@ -68,7 +68,6 @@ module.exports.getUsers = async (req) => {
   }
 
   module.exports.getFeedbackByFileID = async (req) =>{
-    try{
       var fileid = parseInt(req.query.fileid);
     let query = "SELECT * FROM Feedback WHERE fileid = " + fileid;
     console.log(query);
@@ -82,10 +81,7 @@ module.exports.getUsers = async (req) => {
       return results;
     }
   }
-  catch(e)
-  {
-    console.log(e.message);
-  }
+
   }
 
 
