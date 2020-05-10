@@ -51,6 +51,7 @@ app.get('/api', function (req, res) {
        
 app.post('/api/upload', cors(), upload.single('file'), function (req, res) {
   console.log("File recieved" + req.file.originalname);
+  
   var filetype = req.file.originalname.substring(req.file.originalname.length, req.file.originalname.length - 3)
   if (filetype !== "zip")
   {
@@ -211,7 +212,9 @@ app.get('/download',cors(), function(req, res){
   console.log("Downloading called");
   filelocation = req.query.filelocation.toString();
   console.log("Now downloading: " + filelocation);
-    res.download(filelocation); // Set disposition and send it.
+  filenamelist = filelocation.split("/");
+  filename = filelocation[filelocation.length - 1];
+    res.download(filename + ".zip", filelocation); // Set disposition and send it.
   });
 
 /*app.get('/users', cors(), (req, res, next) => {
