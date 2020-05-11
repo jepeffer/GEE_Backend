@@ -236,7 +236,7 @@ module.exports.getUsers = async (req) => {
     // Score: other params are 3, general tags are 1
 
     let final = [];
-    let reasons = "";
+    let reasons = [];
     for(var z = 0; z < 4; z++){
       let bestEntry;
       let bestEntryScore = 0;
@@ -263,11 +263,7 @@ module.exports.getUsers = async (req) => {
           bestReasons = entryReasons;
         }
       }
-      if(bestReasons != ""){
-        reasons = reasons + "\n" + bestReasons;
-      }else{
-        reasons = reasons + "";
-      }
+      reasons[z] = bestReasons;
       final.push(bestEntry);
     }
     final.push(reasons);
