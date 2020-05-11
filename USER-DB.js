@@ -244,26 +244,19 @@ module.exports.getUsers = async (req) => {
       for(var x = 0; x < matches[z].length; x++){
         let entry = matches[z][x];
         let entryScore = 0;
-        let entryReasons = "";
+        let entryReasons = " ";
         if(matches[z][x].grade == req.graveLevel){
           entryScore = entryScore + 3;
-          entryReasons = entryReasons + "1";
-        }else{
-          entryReasons = entryReasons + "0";
+          entryReasons = entryReasons + "Grade Level, ";
         }
         if(matches[z][x].subject == req.subject){
           entryScore = entryScore + 3;
-          entryReasons = entryReasons + "1";
-        }else{
-          entryReasons = entryReasons + "0";
+          entryReasons = entryReasons + "Subject, ";
         }
         if(matches[z][x].contentType == req.contentType){
           entryScore = entryScore + 3;
-          entryReasons = entryReasons + "1";
-        }else{
-          entryReasons = entryReasons+ "0";
+          entryReasons = entryReasons + "Content Type, ";
         }
-
         if(entryScore >= bestEntryScore){
           bestEntry = entry;
           bestEntryScore = entryScore;
@@ -273,12 +266,12 @@ module.exports.getUsers = async (req) => {
       if(bestReasons != ""){
         reasons = reasons + bestReasons;
       }else{
-        reasons = reasons + "000";
+        reasons = reasons + "";
       }
+      bestEntry = bestEntry + "\n";
       final.push(bestEntry);
     }
 
-    console.log(reasons);
     final.push(reasons);
     
     return final;
