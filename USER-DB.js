@@ -264,14 +264,12 @@ module.exports.getUsers = async (req) => {
         }
       }
       if(bestReasons != ""){
-        reasons = reasons + bestReasons;
+        reasons = reasons + "\n" + bestReasons;
       }else{
         reasons = reasons + "";
       }
-      bestEntry = bestEntry + "\n";
       final.push(bestEntry);
     }
-
     final.push(reasons);
     
     return final;
