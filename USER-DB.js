@@ -66,11 +66,11 @@ module.exports.getUsers = async (req) => {
         const hash = bcrypt.hashSync(req.query.password, salt);
         let query2 = "UPDATE Users set password = '" + hash + "', salt = '" + salt + "'";
         let result2 = await pool.query(query2);
-        return "Good";
+        return {"status": 200};
       }
       else
       {
-        return "Bad";
+        return {"status": 500};
       }
       
     } else {
