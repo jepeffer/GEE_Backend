@@ -32,12 +32,12 @@ module.exports.getUsers = async (req) => {
     if (req.query.username) {
       console.log("Checking and returning change password request of : " + req.query.username);
 
-      let query2 = "SELECT * FROM Users where username = '" + req.query.username + "'";
+      let query2 = "SELECT security1, security2 FROM Users where username = '" + req.query.username + "'";
       
       let result2 = await pool.query(query2);
       if(!result2.length)
       {
-        return result2;
+        return {"status": 500};
       }
       else
       return result2; // All was added correctly.
