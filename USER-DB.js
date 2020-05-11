@@ -219,7 +219,7 @@ module.exports.getUsers = async (req) => {
 
 
   module.exports.search = async (req) => {
-    let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%'";
+    let query = "SELECT * FROM OER WHERE tags like '%" + req.query.keywords + "%' OR subject like '%" + req.query.keywords + "%'";
     let results = await pool.query(query);
     let CCCtags = 
     ["Patterns","Cause and Effect", "Scale, Proportion, and Quantity", "Systems and System Models", "Energy and Matter", 
@@ -258,6 +258,7 @@ module.exports.getUsers = async (req) => {
     let PImatches = [];
     let Practicematches = [];
 
+    
     for (let i = 0; i < results.length; i++){
       for(let y = 0; y < CCCtags.length; y++){
         let tags = results[i].tags;
