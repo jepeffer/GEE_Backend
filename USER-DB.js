@@ -91,7 +91,7 @@ module.exports.getUsers = async (req) => {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hash = bcrypt.hashSync(req.query.password, salt);
       console.log ("salt + pass: " + salt + " " + hash);
-      let query2 = "INSERT INTO Users (salt, security2ans, security1ans, security2, security1, username, password, email) VALUES ('" + salt + "', '" + req.query.security2ans + "',  '" + req.query.security1ans + "',  '" + req.query.security2+ "','" + "', '" + req.query.security1 + "','" + req.query.username + "','"  + hash + "','" + req.query.email + "')";
+      let query2 = "INSERT INTO Users (salt, security2ans, security1ans, security2, security1, username, password, email) VALUES ('" + salt + "', '" + req.query.security2ans + "',  '" + req.query.security1ans + "','" + req.query.security2+ "','" + req.query.security1 + "','" + req.query.username + "','"  + hash + "','" + req.query.email + "')";
       let result2 = await pool.query(query2);
       return "1"; // All was added correctly.
       }
