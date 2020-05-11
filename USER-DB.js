@@ -11,7 +11,6 @@ module.exports.getUsers = async (req) => {
       salt =  get_salt_result[0].salt;
       password_hash =  get_salt_result[0].password;
       const hash = bcrypt.hashSync(req.query.password, salt);
-      console.log ("salt + pass: " + salt + " " + password);
       if (hash === password_hash)
       {
         return 1;
