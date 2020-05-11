@@ -29,7 +29,7 @@ module.exports.getUsers = async (req) => {
   };
 
   module.exports.getSecurityQuestions = async (req) => {
-    if (req.query.username && req.query.password) {
+    if (req.query.username) {
       console.log("Checking and returning change password request of : " + req.query.username);
 
       let query2 = "SELECT * FROM Users where username = '" + req.query.username + "'";
