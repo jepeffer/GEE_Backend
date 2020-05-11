@@ -13,11 +13,11 @@ module.exports.getUsers = async (req) => {
       const hash = bcrypt.hashSync(req.query.password, salt);
       if (hash === password_hash)
       {
-        return 200;
+        return {"status": 200};
       }
       else
       {
-        return null;
+        return {"status": 500};
       }
     } else {
       console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
