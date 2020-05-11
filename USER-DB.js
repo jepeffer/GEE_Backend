@@ -231,10 +231,6 @@ module.exports.getUsers = async (req) => {
 
     let matches = [CCCmatches, DCImatches, PImatches, Practicematches];
 
-    // At this point, we have all of the results that match one of the 4 categories of standards
-    // Now we want to sort through
-    // Score: other params are 3, general tags are 1
-
     let final = [];
     let reasons = [];
     for(var z = 0; z < 4; z++){
@@ -244,18 +240,18 @@ module.exports.getUsers = async (req) => {
       for(var x = 0; x < matches[z].length; x++){
         let entry = matches[z][x];
         let entryScore = 0;
-        let entryReasons = "Keyword, ";
+        let entryReasons = "Keyword";
         if(entry.grade == req.graveLevel){
           entryScore = entryScore + 3;
-          entryReasons = entryReasons + "Grade Level, ";
+          entryReasons = entryReasons + ", Grade Level";
         }
-        if(entry.subject == req.subject){
+        if(entry.subject == req.subject){ 
           entryScore = entryScore + 3;
-          entryReasons = entryReasons + "Subject, ";
+          entryReasons = entryReasons + ", Subject";
         }
         if(entry.contentType == req.contentType){
           entryScore = entryScore + 3;
-          entryReasons = entryReasons + "Content Type, ";
+          entryReasons = entryReasons + ", Content Type";
         }
         if(entryScore >= bestEntryScore){
           bestEntry = entry;
