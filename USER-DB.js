@@ -244,16 +244,16 @@ module.exports.getUsers = async (req) => {
       for(var x = 0; x < matches[z].length; x++){
         let entry = matches[z][x];
         let entryScore = 0;
-        let entryReasons = " ";
-        if(matches[z][x].grade == req.graveLevel){
+        let entryReasons = "Keyword, ";
+        if(entry.grade == req.graveLevel){
           entryScore = entryScore + 3;
           entryReasons = entryReasons + "Grade Level, ";
         }
-        if(matches[z][x].subject == req.subject){
+        if(entry.subject == req.subject){
           entryScore = entryScore + 3;
           entryReasons = entryReasons + "Subject, ";
         }
-        if(matches[z][x].contentType == req.contentType){
+        if(entry.contentType == req.contentType){
           entryScore = entryScore + 3;
           entryReasons = entryReasons + "Content Type, ";
         }
