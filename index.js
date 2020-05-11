@@ -116,6 +116,24 @@ app.get('/registerUser', cors(), (req, res, next)=> {
 });
 });
 
+app.get('/getSecurityQuestions', cors(), (req, res, next)=> {
+  db.getSecurityQuestions(req, res).then(result => {
+  res.send(result);
+}, reject => {
+console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+res.send("oops");
+});
+});
+
+app.get('/changePassword', cors(), (req, res, next)=> {
+  db.changePassword(req, res).then(result => {
+  res.send(result);
+}, reject => {
+console.error(new Date().toISOString(), req.path, "the query ", req.query, "resulted in: ", reject);
+res.send("oops");
+});
+});
+
 app.get('/search', cors(), (req, res, next) => {
   console.log("Search");
     db.search(req, res).then(result => {

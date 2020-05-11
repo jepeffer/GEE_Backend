@@ -1,19 +1,76 @@
 var pool = require("./pool")
+const bcrypt = require('bcrypt');
 
 module.exports.getUsers = async (req) => {
     if (req.query.username && req.query.password) {
       let values = [req.query.username, req.query.password];
       // If set then limit to only a ticket linked to locations the user has access to
+      let get_salt_query = "SELECT salt, password FROM Users WHERE username = '" + req.query.username + "'";
+      let get_salt_result  = await pool.query(get_salt_query);
 
-      let query = "SELECT userid, username FROM Users WHERE username = '" + req.query.username + "' AND password = '" + req.query.password +"'";;
-      
-      let result = await pool.query(query, values);
-      if (result.length) 
+      salt =  get_salt_result[0].salt;
+      password_hash =  get_salt_result[0].password;
+      const hash = bcrypt.hashSync(req.query.password, salt);
+      console.log ("salt + pass: " + salt + " " + password);
+      if (hash === password_hash)
       {
-        return (result[0]);
+        return 1;
       }
-  
-      return null;
+      else
+      {
+        return null;
+      }
+    } else {
+      console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
+      return Promise.reject();
+    }
+  };
+
+  module.exports.getSecurityQuestions = async (req) => {
+    if (req.query.username && req.query.password) {
+      console.log("Checking and returning change password request of : " + req.query.username);
+
+      let query2 = "SELECT * FROM Users where username = '" + req.query.username + "'";
+      
+      let result2 = await pool.query(query2);
+      if(!result2.length)
+      {
+        return result2;
+      }
+      else
+      return result2; // All was added correctly.
+      
+    } else {
+      console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
+      return Promise.reject();
+    }
+  };
+
+  module.exports.changePassword = async (req) => {
+    if (req.query.username && req.query.password) {
+      console.log("Checking security questions of: " + req.query.username);
+
+      let query2 = "SELECT * FROM Users where username = '" + req.query.username + "'";
+
+      let result2 = await pool.query(query2);
+      let security1ans = result2[0].security1ans;
+      let security2ans = result2[0].security2ans;
+
+      if (req.query.security1ans === security1ans && req.query.security2ans === security2ans)
+      {
+        console.log("Updating password:" + req.query.username);
+        const saltRounds = 10;
+        const salt = bcrypt.genSaltSync(saltRounds);
+        const hash = bcrypt.hashSync(req.query.password, salt);
+        let query2 = "UPDATE Users set password = '" + hash + "', salt = '" + salt + "'";
+        let result2 = await pool.query(query2);
+        return "Good";
+      }
+      else
+      {
+        return "Bad";
+      }
+      
     } else {
       console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
       return Promise.reject();
@@ -30,24 +87,14 @@ module.exports.getUsers = async (req) => {
         return "2";
       }
       else{
-      let query2 = "INSERT INTO Users (username, password, email) VALUES ('" + req.query.username + "', '" + req.query.password + "','" + req.query.email + "')";
+      const saltRounds = 10;
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hash = bcrypt.hashSync(req.query.password, salt);
+      console.log ("salt + pass: " + salt + " " + hash);
+      let query2 = "INSERT INTO Users (username, salt, security2ans, security1ans, security2, security1, password, email) VALUES ('" + req.query.username + "', '" + salt + "', '" + req.query.security2ans + "',  '" + req.query.security1ans + "',  '" + req.query.security2+ "','" + "',  '" + req.query.security1 + "'," + hash + "','" + req.query.email + "')";
       let result2 = await pool.query(query2);
       return "1"; // All was added correctly.
       }
-    } else {
-      console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
-      return Promise.reject();
-    }
-  };
-
-  module.exports.changePassword = async (req) => {
-    if (req.query.username && req.query.password) {
-      console.log("Registering user:" + req.query.username);
-
-      let query2 = "INSERT INTO Users (username, password) VALUES ('" + req.query.username + "', '" + req.query.password + "','" + req.query.email + "')";
-      let result2 = await pool.query(query2);
-      return "1"; // All was added correctly.
-      
     } else {
       console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
       return Promise.reject();
@@ -138,7 +185,7 @@ module.exports.getUsers = async (req) => {
     file_id = parseInt(file_id_string);
     let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
     let user_results = await pool.query(user_query);
-    user_id = user_results[0].userid
+    user_id = user_results[0].userid;
     let query = "INSERT INTO Feedback (fileid, userid, dateadded, username, feedback) VALUES (" + file_id + "," + user_id + "," + "\"" + req.query.dateadded+ "\"," + "\"" + req.query.username+ "\"," + "\"" + req.query.feedback +"\");";
     let results = await pool.query(query);
     if (!results.length)
