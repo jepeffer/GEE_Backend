@@ -13,7 +13,7 @@ module.exports.getUsers = async (req) => {
       const hash = bcrypt.hashSync(req.query.password, salt);
       if (hash === password_hash)
       {
-        return 1;
+        return 200;
       }
       else
       {
