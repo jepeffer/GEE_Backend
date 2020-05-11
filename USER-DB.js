@@ -139,11 +139,11 @@ module.exports.getUsers = async (req) => {
     let user_query = "SELECT userid FROM Users WHERE username = '" + req.query.username + "'";
     let user_results = await pool.query(user_query);
     user_id = user_results[0].userid
-    let query = "INSERT INTO Feedback (fileid, userid, feedback) VALUES (" + file_id + "," + user_id + "," + "\""+ req.query.feedback +"\");";
+    let query = "INSERT INTO Feedback (fileid, userid, feedback, dateadded) VALUES (" + file_id + "," + user_id + "," + "\"" + req.query.dateadded+ "\"," + "\"" + req.query.username+ "\"," + "\"" + req.query.feedback +"\");";
     let results = await pool.query(query);
     if (!results.length)
     {
-      return "Bad";
+      return results;
     }
     else
     {
