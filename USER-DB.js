@@ -40,7 +40,7 @@ module.exports.getUsers = async (req) => {
         return {"status": 500};
       }
       else
-      return result2; // All was added correctly.
+      return {"security1": result2[0].security1, "security2": result2[0].security2} // All was added correctly.
       
     } else {
       console.error(new Date().toISOString(), req.path, `Cannot get users since request incomplete. Submitted from IP address ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
