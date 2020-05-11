@@ -213,17 +213,16 @@ module.exports.getUsers = async (req) => {
       for(let y = 0; y < CCCtags.length; y++){
         let tags = results[i].tags;
         let description = results[i].description;
-        console.log(description);
-        if(tags.includes(CCCtags[y])){
+        if(tags.includes(CCCtags[y]) || description.includes(CCCtags[y])){
           CCCmatches.push(results[i]);
         }
-        if(tags.includes(DCItags[y])){
+        if(tags.includes(DCItags[y]) || description.includes(DCItags[y])){
           DCImatches.push(results[i]);
         }
-        if(tags.includes(PItags[y])){
+        if(tags.includes(PItags[y]) || description.includes(PItags[y])){
           PImatches.push(results[i]);
         }
-        if(tags.includes(Practicetags[y])){
+        if(tags.includes(Practicetags[y] || description.includes(Practicetags[y]))){
           Practicematches.push(results[i]);
         }
       }
@@ -231,12 +230,8 @@ module.exports.getUsers = async (req) => {
 
     let matches = [CCCmatches, DCImatches, PImatches, Practicematches];
 
-    // At this point, we have all of the results that match one of the 4 categories of standards
-    // Now we want to sort through
-    // Score: other params are 3, general tags are 1
-
     let final = [];
-    let reasons = "";
+    let reasons = [];
     for(var z = 0; z < 4; z++){
       let bestEntry;
       let bestEntryScore = 0;
@@ -244,41 +239,28 @@ module.exports.getUsers = async (req) => {
       for(var x = 0; x < matches[z].length; x++){
         let entry = matches[z][x];
         let entryScore = 0;
-        let entryReasons = "";
-        if(matches[z][x].grade == req.graveLevel){
+        let entryReasons = "Keyword";
+        if(entry.grade == req.graveLevel){
           entryScore = entryScore + 3;
-          entryReasons = entryReasons + "1";
-        }else{
-          entryReasons = entryReasons + "0";
+          entryReasons = entryReasons + ", Grade Level";
         }
-        if(matches[z][x].subject == req.subject){
+        if(entry.subject == req.subject){ 
           entryScore = entryScore + 3;
-          entryReasons = entryReasons + "1";
-        }else{
-          entryReasons = entryReasons + "0";
+          entryReasons = entryReasons + ", Subject";
         }
-        if(matches[z][x].contentType == req.contentType){
+        if(entry.contentType == req.contentType){
           entryScore = entryScore + 3;
-          entryReasons = entryReasons + "1";
-        }else{
-          entryReasons = entryReasons+ "0";
+          entryReasons = entryReasons + ", Content Type";
         }
-
         if(entryScore >= bestEntryScore){
           bestEntry = entry;
           bestEntryScore = entryScore;
           bestReasons = entryReasons;
         }
       }
-      if(bestReasons != ""){
-        reasons = reasons + bestReasons;
-      }else{
-        reasons = reasons + "000";
-      }
+      reasons[z] = bestReasons;
       final.push(bestEntry);
     }
-
-    console.log(reasons);
     final.push(reasons);
     
     return final;
