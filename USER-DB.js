@@ -7,7 +7,10 @@ module.exports.getUsers = async (req) => {
       // If set then limit to only a ticket linked to locations the user has access to
       let get_salt_query = "SELECT salt, password FROM Users WHERE username = '" + req.query.username + "'";
       let get_salt_result  = await pool.query(get_salt_query);
-
+      if (!get_salt_result.length)
+      {
+        return {"status": 500};
+      }
       salt =  get_salt_result[0].salt;
       password_hash =  get_salt_result[0].password;
       const hash = bcrypt.hashSync(req.query.password, salt);
