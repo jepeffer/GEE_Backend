@@ -213,17 +213,16 @@ module.exports.getUsers = async (req) => {
       for(let y = 0; y < CCCtags.length; y++){
         let tags = results[i].tags;
         let description = results[i].description;
-        console.log(description);
-        if(tags.includes(CCCtags[y])){
+        if(tags.includes(CCCtags[y]) || description.includes(CCCtags[y])){
           CCCmatches.push(results[i]);
         }
-        if(tags.includes(DCItags[y])){
+        if(tags.includes(DCItags[y]) || description.includes(DCItags[y])){
           DCImatches.push(results[i]);
         }
-        if(tags.includes(PItags[y])){
+        if(tags.includes(PItags[y]) || description.includes(PItags[y])){
           PImatches.push(results[i]);
         }
-        if(tags.includes(Practicetags[y])){
+        if(tags.includes(Practicetags[y] || description.includes(Practicetags[y]))){
           Practicematches.push(results[i]);
         }
       }
