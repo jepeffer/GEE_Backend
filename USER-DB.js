@@ -158,7 +158,7 @@ module.exports.getUsers = async (req) => {
     let results = await pool.query(query);
     if (!results.length)
     {
-      return "Bad";
+      return results;
     }
     else
     {
