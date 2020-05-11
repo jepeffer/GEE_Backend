@@ -261,6 +261,11 @@ module.exports.getUsers = async (req) => {
       reasons[z] = bestReasons;
       final.push(bestEntry);
     }
+    console.log("This is the reasons: ");
+    for (i = 0; i < reasons.length; i++)
+    {
+      console.log(reasons[i]);
+    }
     final.push(reasons);
     
     return final;
