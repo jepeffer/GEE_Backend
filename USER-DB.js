@@ -258,7 +258,7 @@ module.exports.getUsers = async (req) => {
     let PImatches = [];
     let Practicematches = [];
 
-    
+
     for (let i = 0; i < results.length; i++){
       for(let y = 0; y < CCCtags.length; y++){
         let tags = results[i].tags;
@@ -297,10 +297,6 @@ module.exports.getUsers = async (req) => {
         if(entry.subject == req.subject){ 
           entryScore = entryScore + 3;
           entryReasons = entryReasons + ", Subject";
-        }
-        if(entry.contentType == req.contentType){
-          entryScore = entryScore + 3;
-          entryReasons = entryReasons + ", Content Type";
         }
         if(entryScore >= bestEntryScore){
           bestEntry = entry;
