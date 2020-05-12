@@ -359,7 +359,8 @@ module.exports.getUsers = async (req) => {
     {
       pdflocation = "/root/Resources/" + fileTitle + "/" + filename;
     }
-    var filelocation = "/root/Resources/" + fileTitle;
+    console.log("User id: " + userid);
+    var filelocation = req.query.filelocation;
     let ziplocation = filelocation + ".zip";
     var dateobj = new Date();
    // var date_now = dateobj.toString();
